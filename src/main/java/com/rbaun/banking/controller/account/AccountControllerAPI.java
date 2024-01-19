@@ -37,20 +37,12 @@ public interface AccountControllerAPI {
     ResponseEntity<AccountResponse> createAccount(@Valid @RequestBody CreateAccountRequest createAccountRequest);
 
     /**
-     * Delete account by id
-     * @param id Account id
-     * @return Account deleted
-     */
-    @DeleteMapping("/delete/{id}")
-    ResponseEntity<DeleteAccountResponse> deleteAccount(@PathVariable Long id);
-
-    /**
      * Delete account by account number
      * @param accountNumber Account number
      * @return Account deleted
      */
-    @DeleteMapping("/delete/accountNumber/{accountNumber}")
-    ResponseEntity<DeleteAccountResponse> deleteAccountByAccountNumber(@PathVariable String accountNumber);
+    @DeleteMapping("/delete/{accountNumber}")
+    ResponseEntity<DeleteAccountResponse> deleteAccount(@PathVariable String accountNumber);
 
     /**
      * Get account by account number

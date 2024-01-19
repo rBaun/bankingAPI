@@ -1,7 +1,6 @@
 package com.rbaun.banking.service.account;
 
 import com.rbaun.banking.controller.account.exception.AccountErrorMessage;
-import com.rbaun.banking.controller.account.exception.AccountNotFoundException;
 import com.rbaun.banking.controller.account.exception.AmountInvalidException;
 import com.rbaun.banking.controller.account.exception.InsufficientFundsException;
 import com.rbaun.banking.model.account.Account;
@@ -14,8 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
 @Component
 public class AccountTransactionComponent {
 
@@ -25,9 +22,8 @@ public class AccountTransactionComponent {
     private static final Logger logger = LoggerFactory.getLogger(AccountTransactionComponent.class);
 
     @Transactional
-    public Account deposit(String accountNumber, double amount) {
+    public Account deposit(Account account, double amount) {
         throwIfAmountIsNegative(amount);
-        Account account = findAccountByAccountNumber(accountNumber);
         account.deposit(amount);
 
         Transaction transaction = new Transaction(amount, TransactionType.DEPOSIT);
@@ -38,9 +34,8 @@ public class AccountTransactionComponent {
     }
 
     @Transactional
-    public Account withdraw(String accountNumber, double amount) {
+    public Account withdraw(Account account, double amount) {
         throwIfAmountIsNegative(amount);
-        Account account = findAccountByAccountNumber(accountNumber);
         throwIfAccountHasInsufficientFunds(amount, account);
         account.withdraw(amount);
 
@@ -65,15 +60,6 @@ public class AccountTransactionComponent {
             logger.error("Account: {} has insufficient funds", account);
             throw new InsufficientFundsException(AccountErrorMessage.INSUFFICIENT_FUNDS.getMessage());
         }
-    }
-
-    private Account findAccountByAccountNumber(String accountNumber) {
-        Optional<Account> accountFoundByAccountNumber = accountRepository.findByAccountNumber(accountNumber);
-        if (accountFoundByAccountNumber.isEmpty()) {
-            logger.error("Account with account number: {} not found", accountNumber);
-            throw new AccountNotFoundException(AccountErrorMessage.ACCOUNT_NOT_FOUND.getMessage());
-        }
-        return accountFoundByAccountNumber.get();
     }
 
 }
