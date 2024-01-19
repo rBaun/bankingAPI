@@ -1,50 +1,17 @@
 package com.rbaun.banking.service.account;
 
-import com.rbaun.banking.model.Account;
-import com.rbaun.banking.repository.AccountRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.rbaun.banking.model.account.Account;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class AccountService implements AccountServiceIF {
-
-    private final AccountRepository accountRepository;
-
-    @Autowired
-    public AccountService(AccountRepository accountRepository) {
-        this.accountRepository = accountRepository;
-    }
-
-    @Override
-    public Account createAccount(Account account) {
-        return accountRepository.save(account);
-    }
-
-    @Override
-    public Optional<Account> getAccountById(Long id) {
-        return accountRepository.findById(id);
-    }
-
-    @Override
-    public Optional<Account> getAccountByAccountNumber(String accountNumber) {
-        return accountRepository.findByAccountNumber(accountNumber);
-    }
-
-    @Override
-    public void deleteAccount(Long id) {
-        accountRepository.deleteById(id);
-    }
-
-    @Override
-    public void deleteAccountByAccountNumber(String accountNumber) {
-        accountRepository.deleteByAccountNumber(accountNumber);
-    }
-
-    @Override
-    public List<Account> getAllAccounts() {
-        return accountRepository.findAll();
-    }
+public interface AccountService {
+    Account createAccount(Account account);
+    Optional<Account> getAccountById(Long id);
+    Optional<Account> getAccountByAccountNumber(String accountNumber);
+    void deleteAccount(Long id);
+    void deleteAccountByAccountNumber(String accountNumber);
+    List<Account> getAllAccounts();
+    Account deposit(String accountNumber, double amount);
+    Account withdraw(String accountNumber, double amount);
 }

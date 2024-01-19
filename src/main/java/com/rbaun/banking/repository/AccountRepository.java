@@ -1,6 +1,6 @@
 package com.rbaun.banking.repository;
 
-import com.rbaun.banking.model.Account;
+import com.rbaun.banking.model.account.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
