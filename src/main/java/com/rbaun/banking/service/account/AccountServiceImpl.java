@@ -31,11 +31,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account createAccount(Account account) {
-        boolean accountExists = getAccountByAccountNumber(account.getAccountNumber()) != null;
-        if (accountExists) {
-            logger.error("Account with account number {} already exists", account.getAccountNumber());
-            throw new DuplicateAccountException("Account with account number " + account.getAccountNumber() + " already exists");
-        }
+        throwIfAccountNumberAlreadyCreated(account);
 
         return accountRepository.save(account);
     }
@@ -85,5 +81,13 @@ public class AccountServiceImpl implements AccountService {
         Account account = getAccountByAccountNumber(accountNumber);
 
         return accountTransactionComponent.withdraw(account, amount);
+    }
+
+    private void throwIfAccountNumberAlreadyCreated(Account account) {
+        boolean accountExists = accountRepository.findByAccountNumber(account.getAccountNumber()).isPresent();
+        if (accountExists) {
+            logger.error("Account with account number {} already exists", account.getAccountNumber());
+            throw new DuplicateAccountException("Account with account number " + account.getAccountNumber() + " already exists");
+        }
     }
 }
