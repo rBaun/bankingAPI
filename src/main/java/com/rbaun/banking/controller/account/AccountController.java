@@ -1,10 +1,14 @@
 package com.rbaun.banking.controller.account;
 
 import com.rbaun.banking.controller.BaseController;
+import com.rbaun.banking.controller.account.endpoint.AccountAPI;
+import com.rbaun.banking.controller.account.endpoint.AccountNumberAPI;
+import com.rbaun.banking.controller.account.endpoint.TransactionAPI;
 import com.rbaun.banking.controller.account.request.CreateAccountRequest;
 import com.rbaun.banking.controller.account.response.AccountBalanceResponse;
 import com.rbaun.banking.controller.account.response.AccountResponse;
 import com.rbaun.banking.controller.account.response.DeleteAccountResponse;
+import com.rbaun.banking.controller.account.response.TransactionResponse;
 import com.rbaun.banking.model.account.Account;
 import com.rbaun.banking.service.account.AccountService;
 import org.slf4j.Logger;
@@ -16,11 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class AccountController extends BaseController implements AccountControllerAPI {
+public class AccountController extends BaseController implements AccountAPI, AccountNumberAPI, TransactionAPI {
 
+    private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
     @Autowired
     private AccountService accountService;
-    private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
     @Override
     public ResponseEntity<List<AccountResponse>> getAllAccounts() {
@@ -83,5 +87,14 @@ public class AccountController extends BaseController implements AccountControll
         logger.info("Deleted account: {}", accountNumber);
 
         return ResponseEntity.ok(new DeleteAccountResponse(accountNumber));
+    }
+
+    @Override
+    public ResponseEntity<List<TransactionResponse>> getAllTransactions(String accountNumber) {
+        logger.info("Got request to get all transactions for account with account number: {}", accountNumber);
+        List<TransactionResponse> transactionList = accountService.getAccountTransactionHistory(accountNumber).stream().map(TransactionResponse::new).toList();
+        logger.info("Found {} transactions to return", transactionList.size());
+
+        return ResponseEntity.ok(transactionList);
     }
 }

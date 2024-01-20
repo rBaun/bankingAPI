@@ -11,6 +11,8 @@ import java.util.List;
 @Entity(name = "Accounts")
 public class Account extends BaseEntity {
 
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Transaction> transactionList = new ArrayList<>();
     @Column(unique = true)
     private String accountNumber;
     @Enumerated(EnumType.STRING)
@@ -18,10 +20,8 @@ public class Account extends BaseEntity {
     @Column(nullable = false)
     private double balance;
 
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<Transaction> transactionList = new ArrayList<>();
-
-    public Account() {}
+    public Account() {
+    }
 
     public Account(CreateAccountRequest createAccountRequest) {
         this.accountNumber = createAccountRequest.accountNumber();
@@ -54,6 +54,7 @@ public class Account extends BaseEntity {
 
     /**
      * Remove transaction from account, if exists on account
+     *
      * @param transaction Transaction to remove
      */
     public void removeTransaction(Transaction transaction) {

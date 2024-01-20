@@ -3,6 +3,7 @@ package com.rbaun.banking.service.account;
 import com.rbaun.banking.controller.account.exception.AccountNotFoundException;
 import com.rbaun.banking.controller.account.exception.DuplicateAccountException;
 import com.rbaun.banking.model.account.Account;
+import com.rbaun.banking.model.account.Transaction;
 import com.rbaun.banking.repository.AccountRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
@@ -19,9 +20,9 @@ import java.util.Optional;
 @Service
 public class AccountServiceImpl implements AccountService {
 
+    private static final Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
     private final AccountRepository accountRepository;
     private final AccountTransactionComponent accountTransactionComponent;
-    private static final Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
 
     @Autowired
     public AccountServiceImpl(AccountRepository accountRepository, AccountTransactionComponent accountTransactionComponent) {
@@ -81,6 +82,13 @@ public class AccountServiceImpl implements AccountService {
         Account account = getAccountByAccountNumber(accountNumber);
 
         return accountTransactionComponent.withdraw(account, amount);
+    }
+
+    @Override
+    public List<Transaction> getAccountTransactionHistory(String accountNumber) {
+        Account account = getAccountByAccountNumber(accountNumber);
+
+        return account.getTransactionList();
     }
 
     private void throwIfAccountNumberAlreadyCreated(Account account) {

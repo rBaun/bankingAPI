@@ -3,6 +3,7 @@ package com.rbaun.banking.service.account;
 import com.rbaun.banking.controller.account.exception.AccountNotFoundException;
 import com.rbaun.banking.controller.account.exception.DuplicateAccountException;
 import com.rbaun.banking.model.account.Account;
+import com.rbaun.banking.model.account.Transaction;
 import com.rbaun.banking.model.enums.AccountType;
 import com.rbaun.banking.repository.AccountRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -222,4 +223,24 @@ public class AccountServiceImplTest {
         assertThrows(AccountNotFoundException.class, () -> accountService.withdraw("123", 100.0));
     }
 
+    @Test
+    public void getAccountTransactionHistory_AccountExist_ReturnsTransactionHistory() {
+        // Setup account
+        String accountNumber = "123";
+        Account account = new Account(accountNumber, AccountType.CREDIT, 0.0);
+
+        // Mock the behavior of accountRepository to return our account when findByAccountNumber is called
+        when(accountRepository.findByAccountNumber(accountNumber)).thenReturn(Optional.of(account));
+
+        // Call the getAccountTransactionHistory method
+        List<Transaction> transactionHistory = accountService.getAccountTransactionHistory(accountNumber);
+
+        // Verify that the transaction history is empty
+        assertEquals(0, transactionHistory.size());
+    }
+
+    @Test
+    public void getAccountTransactionHistory_AccountNotExist_ThrowsAccountNotFoundException() {
+        assertThrows(AccountNotFoundException.class, () -> accountService.getAccountTransactionHistory("123"));
+    }
 }

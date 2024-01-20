@@ -62,8 +62,8 @@ public class AccountTransactionComponentTest {
 
         // Verify transaction was added to account for the correct type and amount
         assertEquals(transactionListSize, accountAfterDeposit.getTransactionList().size());
-        assertEquals(amount, accountAfterDeposit.getTransactionList().get(transactionListSize-1).getAmount());
-        assertEquals(TransactionType.DEPOSIT, accountAfterDeposit.getTransactionList().get(transactionListSize-1).getType());
+        assertEquals(amount, accountAfterDeposit.getTransactionList().get(transactionListSize - 1).getAmount());
+        assertEquals(TransactionType.DEPOSIT, accountAfterDeposit.getTransactionList().get(transactionListSize - 1).getType());
 
         // Verify account saved once
         verify(accountRepository, times(1)).save(account);
@@ -111,8 +111,8 @@ public class AccountTransactionComponentTest {
 
         // Verify transaction was added to account for the correct type and amount
         assertEquals(transactionListSize, accountAfterWithdrawal.getTransactionList().size());
-        assertEquals(amount, accountAfterWithdrawal.getTransactionList().get(transactionListSize-1).getAmount());
-        assertEquals(TransactionType.WITHDRAWAL, accountAfterWithdrawal.getTransactionList().get(transactionListSize-1).getType());
+        assertEquals(amount, accountAfterWithdrawal.getTransactionList().get(transactionListSize - 1).getAmount());
+        assertEquals(TransactionType.WITHDRAWAL, accountAfterWithdrawal.getTransactionList().get(transactionListSize - 1).getType());
 
         // Verify account saved once
         verify(accountRepository, times(1)).save(account);

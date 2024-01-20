@@ -16,7 +16,8 @@ public class Transaction extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private TransactionType type;
 
-    public Transaction() {}
+    public Transaction() {
+    }
 
     public Transaction(double amount, TransactionType type) {
         this.amount = amount;

@@ -8,4 +8,5 @@ public record CreateAccountRequest(
         @NotBlank(message = "Account number is required") String accountNumber,
         @NotNull(message = "Account type is required") AccountType accountType,
         double balance
-) {}
+) {
+}
