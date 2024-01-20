@@ -13,6 +13,8 @@ import java.lang.annotation.Target;
 @Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
 public @interface ExactlyOneFieldNotNull {
     String message() default "Exactly one field must be not null";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }

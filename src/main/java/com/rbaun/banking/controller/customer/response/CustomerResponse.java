@@ -11,10 +11,6 @@ public record CustomerResponse(
         String dateOfBirth,
         String socialSecurityNumber
 ) {
-    public static CustomerResponse from(Customer customer) {
-        return new CustomerResponse(customer);
-    }
-
     public CustomerResponse(Customer customer) {
         this(
                 customer.getName(),
@@ -24,5 +20,9 @@ public record CustomerResponse(
                 DateUtil.format(customer.getDateOfBirth()),
                 customer.getSocialSecurityNumber()
         );
+    }
+
+    public static CustomerResponse from(Customer customer) {
+        return new CustomerResponse(customer);
     }
 }

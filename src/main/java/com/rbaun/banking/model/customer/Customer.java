@@ -2,10 +2,13 @@ package com.rbaun.banking.model.customer;
 
 import com.rbaun.banking.controller.customer.request.CreateCustomerRequest;
 import com.rbaun.banking.controller.customer.request.UpdateCustomerRequest;
-import com.rbaun.banking.model.account.Account;
 import com.rbaun.banking.model.BaseEntity;
+import com.rbaun.banking.model.account.Account;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 
-import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +33,15 @@ public class Customer extends BaseEntity {
     private List<Account> accounts = new ArrayList<>();
 
     public Customer() {
+    }
+
+    public Customer(String name, String email, String phoneNumber, String address, LocalDate dateOfBirth, String socialSecurityNumber) {
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.dateOfBirth = dateOfBirth;
+        this.socialSecurityNumber = socialSecurityNumber;
     }
 
     public Customer(CreateCustomerRequest request) {

@@ -1,9 +1,5 @@
 package com.rbaun.banking.service.customer.strategy;
 
-import com.rbaun.banking.service.customer.strategy.LookupCustomerStrategy;
-import com.rbaun.banking.service.customer.strategy.EmailLookupCustomerStrategy;
-import com.rbaun.banking.service.customer.strategy.PhoneNumberLookupCustomerStrategy;
-import com.rbaun.banking.service.customer.strategy.SocialSecurityNumberLookupCustomerStrategy;
 import com.rbaun.banking.validation.ExactlyOneFieldNotNull;
 
 @ExactlyOneFieldNotNull

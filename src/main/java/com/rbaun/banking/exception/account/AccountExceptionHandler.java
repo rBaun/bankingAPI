@@ -1,9 +1,5 @@
 package com.rbaun.banking.exception.account;
 
-import com.rbaun.banking.exception.account.AccountNotFoundException;
-import com.rbaun.banking.exception.account.AmountInvalidException;
-import com.rbaun.banking.exception.account.DuplicateAccountException;
-import com.rbaun.banking.exception.account.InsufficientFundsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

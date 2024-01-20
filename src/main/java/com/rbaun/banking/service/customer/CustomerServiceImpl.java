@@ -35,11 +35,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<Customer> searchCustomers(String searchTerm) {
-        CustomerSpecification searchSpec = (CustomerSpecification)
+        CustomerSpecification searchSpec =
                 new NameSelector(searchTerm)
-                .or(new EmailSelector(searchTerm))
-                .or(new AddressSelector(searchTerm))
-                .or(new PhoneNumberSelector(searchTerm));
+                        .or(new EmailSelector(searchTerm))
+                        .or(new AddressSelector(searchTerm))
+                        .or(new PhoneNumberSelector(searchTerm));
 
         return customerRepository.findAll().stream().filter(searchSpec::isSatisfiedBy).toList();
     }
@@ -132,21 +132,21 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     private void throwIfEmailAlreadyRegistered(String email) {
-        if (getCustomerByEmail(email) != null) {
+        if (customerRepository.findByEmail(email).isPresent()) {
             logger.error("Customer with email {} already exists", email);
             throw new DuplicateEmailException(CustomerErrorMessage.CUSTOMER_DUPLICATE_EMAIL.getMessage());
         }
     }
 
     private void throwIfPhoneNumberAlreadyRegistered(String phoneNumber) {
-        if (getCustomerByPhoneNumber(phoneNumber) != null) {
+        if (customerRepository.findByPhoneNumber(phoneNumber).isPresent()) {
             logger.error("Customer with phone number {} already exists", phoneNumber);
             throw new DuplicatePhoneNumberException(CustomerErrorMessage.CUSTOMER_DUPLICATE_PHONE_NUMBER.getMessage());
         }
     }
 
     private void throwIfSocialSecurityNumberAlreadyRegistered(String socialSecurityNumber) {
-        if (getCustomerBySocialSecurityNumber(socialSecurityNumber) != null) {
+        if (customerRepository.findBySocialSecurityNumber(socialSecurityNumber).isPresent()) {
             logger.error("Customer with social security number {} already exists", socialSecurityNumber);
             throw new DuplicateSocialSecurityNumberException(CustomerErrorMessage.CUSTOMER_DUPLICATE_SOCIAL_SECURITY_NUMBER.getMessage());
         }

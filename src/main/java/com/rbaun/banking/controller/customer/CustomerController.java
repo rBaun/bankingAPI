@@ -2,12 +2,12 @@ package com.rbaun.banking.controller.customer;
 
 import com.rbaun.banking.controller.customer.endpoint.CustomerAPI;
 import com.rbaun.banking.controller.customer.request.CreateCustomerRequest;
-import com.rbaun.banking.service.customer.strategy.LookupCustomerRequest;
 import com.rbaun.banking.controller.customer.request.UpdateCustomerRequest;
 import com.rbaun.banking.controller.customer.response.CustomerResponse;
 import com.rbaun.banking.controller.customer.response.DeleteCustomerResponse;
 import com.rbaun.banking.model.customer.Customer;
 import com.rbaun.banking.service.customer.CustomerService;
+import com.rbaun.banking.service.customer.strategy.LookupCustomerRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
