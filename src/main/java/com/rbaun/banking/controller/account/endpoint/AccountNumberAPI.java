@@ -8,8 +8,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("/accounts/accountNumber")
+@RequestMapping(AccountNumberAPI.BASE_URL)
 public interface AccountNumberAPI {
+
+    String BASE_URL = AccountAPI.BASE_URL + "/accountNumber";
+    String GET_ACCOUNT_BY_ACCOUNT_NUMBER_URL = "/{accountNumber}";
+    String DEPOSIT_URL = "/{accountNumber}/deposit/{amount}";
+    String WITHDRAW_URL = "/{accountNumber}/withdraw/{amount}";
 
     /**
      * Get account by account number
@@ -17,7 +22,7 @@ public interface AccountNumberAPI {
      * @param accountNumber Account number
      * @return Account matching the given account number
      */
-    @GetMapping("/{accountNumber}")
+    @GetMapping(GET_ACCOUNT_BY_ACCOUNT_NUMBER_URL)
     ResponseEntity<AccountResponse> getAccountByAccountNumber(@PathVariable String accountNumber);
 
     /**
@@ -27,7 +32,7 @@ public interface AccountNumberAPI {
      * @param amount        Amount to deposit
      * @return Account balance
      */
-    @PutMapping("/{accountNumber}/deposit/{amount}")
+    @PutMapping(DEPOSIT_URL)
     ResponseEntity<AccountBalanceResponse> deposit(@PathVariable String accountNumber, @PathVariable double amount);
 
     /**
@@ -37,6 +42,6 @@ public interface AccountNumberAPI {
      * @param amount        Amount to withdraw
      * @return Account balance
      */
-    @PutMapping("/{accountNumber}/withdraw/{amount}")
+    @PutMapping(WITHDRAW_URL)
     ResponseEntity<AccountBalanceResponse> withdraw(@PathVariable String accountNumber, @PathVariable double amount);
 }

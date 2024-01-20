@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@RequestMapping("/accounts/{accountNumber}/transactions")
+@RequestMapping(TransactionAPI.BASE_URL)
 public interface TransactionAPI {
 
-    @GetMapping("/all")
+    String BASE_URL = AccountAPI.BASE_URL + "/{accountNumber}/transactions";
+    String GET_ALL_TRANSACTIONS_URL = "/all";
+
+    @GetMapping(GET_ALL_TRANSACTIONS_URL)
     ResponseEntity<List<TransactionResponse>> getAllTransactions(@PathVariable String accountNumber);
 }

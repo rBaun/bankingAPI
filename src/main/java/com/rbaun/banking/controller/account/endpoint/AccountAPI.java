@@ -9,15 +9,21 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@RequestMapping("/accounts")
+@RequestMapping(AccountAPI.BASE_URL)
 public interface AccountAPI {
+
+    String BASE_URL = "/accounts";
+    String GET_ALL_ACCOUNTS_URL = "/all";
+    String GET_ACCOUNT_BY_ID_URL = "/{id}";
+    String CREATE_ACCOUNT_URL = "/create";
+    String DELETE_ACCOUNT_URL = "/delete/{accountNumber}";
 
     /**
      * Get all accounts
      *
      * @return List of all accounts
      */
-    @GetMapping("/all")
+    @GetMapping(GET_ALL_ACCOUNTS_URL)
     ResponseEntity<List<AccountResponse>> getAllAccounts();
 
     /**
@@ -26,7 +32,7 @@ public interface AccountAPI {
      * @param id Account id
      * @return Account matching the given id
      */
-    @GetMapping("/{id}")
+    @GetMapping(GET_ACCOUNT_BY_ID_URL)
     ResponseEntity<AccountResponse> getAccountById(@PathVariable Long id);
 
     /**
@@ -35,7 +41,7 @@ public interface AccountAPI {
      * @param createAccountRequest Account to create
      * @return Account created
      */
-    @PostMapping("/create")
+    @PostMapping(CREATE_ACCOUNT_URL)
     ResponseEntity<AccountResponse> createAccount(@Valid @RequestBody CreateAccountRequest createAccountRequest);
 
     /**
@@ -44,6 +50,6 @@ public interface AccountAPI {
      * @param accountNumber Account number
      * @return Account deleted
      */
-    @DeleteMapping("/delete/{accountNumber}")
+    @DeleteMapping(DELETE_ACCOUNT_URL)
     ResponseEntity<DeleteAccountResponse> deleteAccount(@PathVariable String accountNumber);
 }
