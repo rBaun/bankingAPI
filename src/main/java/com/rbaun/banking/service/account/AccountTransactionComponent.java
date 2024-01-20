@@ -25,10 +25,7 @@ public class AccountTransactionComponent {
     public Account deposit(Account account, double amount) {
         throwIfAmountIsNegative(amount);
         account.deposit(amount);
-
-        Transaction transaction = new Transaction(amount, TransactionType.DEPOSIT);
-        account.addTransaction(transaction);
-        logger.info("Added transaction: {} to account: {}", transaction, account);
+        addTransactionToAccount(amount, TransactionType.DEPOSIT, account);
 
         return accountRepository.save(account);
     }
@@ -38,12 +35,15 @@ public class AccountTransactionComponent {
         throwIfAmountIsNegative(amount);
         throwIfAccountHasInsufficientFunds(amount, account);
         account.withdraw(amount);
-
-        Transaction transaction = new Transaction(amount, TransactionType.WITHDRAWAL);
-        account.addTransaction(transaction);
-        logger.info("Added transaction: {} to account: {}", transaction, account);
+        addTransactionToAccount(amount, TransactionType.WITHDRAWAL, account);
 
         return accountRepository.save(account);
+    }
+
+    private void addTransactionToAccount(double amount, TransactionType transactionType, Account account) {
+        Transaction transaction = new Transaction(amount, transactionType);
+        account.addTransaction(transaction);
+        logger.info("Added transaction: {} to account: {}", transaction, account);
     }
 
     private void throwIfAmountIsNegative(double amount) {
