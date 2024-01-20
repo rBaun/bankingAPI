@@ -2,6 +2,7 @@ package com.rbaun.banking.model.account;
 
 import com.rbaun.banking.controller.account.request.CreateAccountRequest;
 import com.rbaun.banking.model.BaseEntity;
+import com.rbaun.banking.model.customer.Customer;
 import com.rbaun.banking.model.enums.AccountType;
 import jakarta.persistence.*;
 
@@ -19,6 +20,9 @@ public class Account extends BaseEntity {
     private AccountType accountType;
     @Column(nullable = false)
     private double balance;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     public Account() {
     }
@@ -93,6 +97,14 @@ public class Account extends BaseEntity {
 
     public void setTransactionList(List<Transaction> transactionList) {
         this.transactionList = transactionList;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     @Override
