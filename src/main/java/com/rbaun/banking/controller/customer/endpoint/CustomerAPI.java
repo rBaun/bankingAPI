@@ -1,6 +1,7 @@
 package com.rbaun.banking.controller.customer.endpoint;
 
 import com.rbaun.banking.controller.customer.request.CreateCustomerRequest;
+import com.rbaun.banking.service.customer.strategy.LookupCustomerRequest;
 import com.rbaun.banking.controller.customer.request.UpdateCustomerRequest;
 import com.rbaun.banking.controller.customer.response.CustomerResponse;
 import com.rbaun.banking.controller.customer.response.DeleteCustomerResponse;
@@ -35,35 +36,34 @@ public interface CustomerAPI {
          * @return List of customers matching the search term
          */
         @GetMapping(GET_CUSTOMERS_BY_SEARCH_TERM_URL)
-        ResponseEntity<List<CustomerResponse>> getCustomerBySearchTerm(@PathVariable String searchTerm);
+        ResponseEntity<List<CustomerResponse>> getCustomersBySearchTerm(@PathVariable String searchTerm);
 
         /**
          * Create a new customer
          *
-         * @param createCustomerRequest Customer to create
+         * @param request Customer to create
          * @return Customer created
          */
         @PostMapping(CREATE_CUSTOMER_URL)
-        ResponseEntity<CustomerResponse> createCustomer(@Valid @RequestBody CreateCustomerRequest createCustomerRequest);
+        ResponseEntity<CustomerResponse> createCustomer(@Valid @RequestBody CreateCustomerRequest request);
 
 
         /**
-         * Delete customer by id
+         * Delete customer by email, phoneNumber or socialSecurityNumber
          *
-         * @param id Customer id
+         * @param request Customer to delete
          * @return Customer deleted
          */
         @DeleteMapping(DELETE_CUSTOMER_URL)
-        ResponseEntity<DeleteCustomerResponse> deleteCustomer(@PathVariable Long id);
+        ResponseEntity<DeleteCustomerResponse> deleteCustomer(@RequestBody LookupCustomerRequest request);
 
 
         /**
          * Update customer by id
          *
-         * @param id Customer id
-         * @param updateCustomerRequest Customer to update
+         * @param request Customer to update
          * @return Customer updated
          */
         @PutMapping(UPDATE_CUSTOMER_URL)
-        ResponseEntity<CustomerResponse> updateCustomer(@PathVariable Long id, @Valid @RequestBody UpdateCustomerRequest updateCustomerRequest);
+        ResponseEntity<CustomerResponse> updateCustomer(@Valid @RequestBody UpdateCustomerRequest request);
 }

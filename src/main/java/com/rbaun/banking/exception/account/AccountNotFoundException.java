@@ -1,4 +1,4 @@
-package com.rbaun.banking.controller.account.exception;
+package com.rbaun.banking.exception.account;
 
 public class AccountNotFoundException extends RuntimeException {
 

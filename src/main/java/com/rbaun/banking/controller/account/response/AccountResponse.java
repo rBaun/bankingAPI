@@ -8,6 +8,10 @@ public record AccountResponse(
         AccountType accountType,
         double balance
 ) {
+    public static AccountResponse from(Account account) {
+        return new AccountResponse(account);
+    }
+
     public AccountResponse(Account account) {
         this(account.getAccountNumber(), account.getAccountType(), account.getBalance());
     }

@@ -1,19 +1,19 @@
 package com.rbaun.banking.validation;
 
-import com.rbaun.banking.controller.customer.request.DeleteCustomerRequest;
+import com.rbaun.banking.service.customer.strategy.LookupCustomerRequest;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.lang.reflect.InvocationTargetException;
 
-public class ExactlyOneFieldNotNullValidator implements ConstraintValidator<ExactlyOneFieldNotNull, DeleteCustomerRequest> {
+public class ExactlyOneFieldNotNullValidator implements ConstraintValidator<ExactlyOneFieldNotNull, LookupCustomerRequest> {
 
     @Override
     public void initialize(ExactlyOneFieldNotNull constraintAnnotation) {
     }
 
     @Override
-    public boolean isValid(DeleteCustomerRequest request, ConstraintValidatorContext context) {
+    public boolean isValid(LookupCustomerRequest request, ConstraintValidatorContext context) {
         int nonNullCount = 0;
 
         // Check if exactly one field is not null

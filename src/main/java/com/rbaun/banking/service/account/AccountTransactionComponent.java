@@ -1,8 +1,8 @@
 package com.rbaun.banking.service.account;
 
-import com.rbaun.banking.controller.account.exception.AccountErrorMessage;
-import com.rbaun.banking.controller.account.exception.AmountInvalidException;
-import com.rbaun.banking.controller.account.exception.InsufficientFundsException;
+import com.rbaun.banking.exception.account.AccountErrorMessage;
+import com.rbaun.banking.exception.account.AmountInvalidException;
+import com.rbaun.banking.exception.account.InsufficientFundsException;
 import com.rbaun.banking.model.account.Account;
 import com.rbaun.banking.model.account.Transaction;
 import com.rbaun.banking.model.enums.TransactionType;

@@ -41,7 +41,7 @@ public class AccountController extends BaseController implements AccountAPI, Acc
         Account account = accountService.getAccountById(id);
         logger.info("Found account: {}", account);
 
-        return ResponseEntity.ok(new AccountResponse(account));
+        return ResponseEntity.ok(AccountResponse.from(account));
     }
 
     @Override
@@ -50,7 +50,7 @@ public class AccountController extends BaseController implements AccountAPI, Acc
         Account account = accountService.getAccountByAccountNumber(accountNumber);
         logger.info("Found account: {}", account);
 
-        return ResponseEntity.ok(new AccountResponse(account));
+        return ResponseEntity.ok(AccountResponse.from(account));
     }
 
     @Override
@@ -59,7 +59,7 @@ public class AccountController extends BaseController implements AccountAPI, Acc
         Account account = accountService.deposit(accountNumber, amount);
         logger.info("Deposited {} into account: {}", amount, account);
 
-        return ResponseEntity.ok(new AccountBalanceResponse(account));
+        return ResponseEntity.ok(AccountBalanceResponse.from(account));
     }
 
     @Override
@@ -68,16 +68,16 @@ public class AccountController extends BaseController implements AccountAPI, Acc
         Account account = accountService.withdraw(accountNumber, amount);
         logger.info("Withdrew {} from account: {}", amount, account);
 
-        return ResponseEntity.ok(new AccountBalanceResponse(account));
+        return ResponseEntity.ok(AccountBalanceResponse.from(account));
     }
 
     @Override
-    public ResponseEntity<AccountResponse> createAccount(CreateAccountRequest createAccountRequest) {
-        logger.info("Got request to create account: {}", createAccountRequest);
-        Account account = accountService.createAccount(new Account(createAccountRequest));
+    public ResponseEntity<AccountResponse> createAccount(CreateAccountRequest request) {
+        logger.info("Got request to create account: {}", request);
+        Account account = accountService.createAccount(new Account(request));
         logger.info("Created account: {}", account);
 
-        return ResponseEntity.ok(new AccountResponse(account));
+        return ResponseEntity.ok(AccountResponse.from(account));
     }
 
     @Override
@@ -86,7 +86,7 @@ public class AccountController extends BaseController implements AccountAPI, Acc
         accountService.deleteAccountByAccountNumber(accountNumber);
         logger.info("Deleted account: {}", accountNumber);
 
-        return ResponseEntity.ok(new DeleteAccountResponse(accountNumber));
+        return ResponseEntity.ok(DeleteAccountResponse.from(accountNumber));
     }
 
     @Override

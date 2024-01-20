@@ -1,5 +1,7 @@
 package com.rbaun.banking.model.customer;
 
+import com.rbaun.banking.controller.customer.request.CreateCustomerRequest;
+import com.rbaun.banking.controller.customer.request.UpdateCustomerRequest;
 import com.rbaun.banking.model.account.Account;
 import com.rbaun.banking.model.BaseEntity;
 
@@ -28,6 +30,23 @@ public class Customer extends BaseEntity {
     private List<Account> accounts = new ArrayList<>();
 
     public Customer() {
+    }
+
+    public Customer(CreateCustomerRequest request) {
+        this.name = request.firstName() + " " + request.lastName();
+        this.email = request.email();
+        this.phoneNumber = request.phoneNumber();
+        this.address = request.address();
+        this.dateOfBirth = request.dateOfBirth();
+        this.socialSecurityNumber = request.socialSecurityNumber();
+    }
+
+    public Customer(UpdateCustomerRequest request) {
+        this.name = request.firstName() + " " + request.lastName();
+        this.email = request.email();
+        this.phoneNumber = request.phoneNumber();
+        this.address = request.address();
+        this.dateOfBirth = request.dateOfBirth();
     }
 
     public void addAccount(Account account) {
