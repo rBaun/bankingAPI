@@ -16,10 +16,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class AccountTransactionComponent {
 
+    private static final Logger logger = LoggerFactory.getLogger(AccountTransactionComponent.class);
     @Autowired
     private AccountRepository accountRepository;
-
-    private static final Logger logger = LoggerFactory.getLogger(AccountTransactionComponent.class);
 
     @Transactional
     public Account deposit(Account account, double amount) {
