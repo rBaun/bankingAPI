@@ -8,4 +8,8 @@ public record DeleteAccountResponse(
     public DeleteAccountResponse(Account account) {
         this(account.getAccountNumber());
     }
+
+    public static DeleteAccountResponse from(String accountNumber) {
+        return new DeleteAccountResponse(accountNumber);
+    }
 }

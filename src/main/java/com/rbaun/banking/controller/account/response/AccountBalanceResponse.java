@@ -8,4 +8,8 @@ public record AccountBalanceResponse(
     public AccountBalanceResponse(Account account) {
         this(account.getAccountNumber(), account.getBalance());
     }
+
+    public static AccountBalanceResponse from(Account account) {
+        return new AccountBalanceResponse(account);
+    }
 }

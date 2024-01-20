@@ -38,11 +38,11 @@ public interface AccountAPI {
     /**
      * Create a new account
      *
-     * @param createAccountRequest Account to create
+     * @param request Account to create
      * @return Account created
      */
     @PostMapping(CREATE_ACCOUNT_URL)
-    ResponseEntity<AccountResponse> createAccount(@Valid @RequestBody CreateAccountRequest createAccountRequest);
+    ResponseEntity<AccountResponse> createAccount(@Valid @RequestBody CreateAccountRequest request);
 
     /**
      * Delete account by account number

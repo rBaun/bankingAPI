@@ -1,7 +1,8 @@
 package com.rbaun.banking.service.account;
 
-import com.rbaun.banking.controller.account.exception.AccountNotFoundException;
-import com.rbaun.banking.controller.account.exception.DuplicateAccountException;
+import com.rbaun.banking.exception.account.AccountErrorMessage;
+import com.rbaun.banking.exception.account.AccountNotFoundException;
+import com.rbaun.banking.exception.account.DuplicateAccountException;
 import com.rbaun.banking.model.account.Account;
 import com.rbaun.banking.model.account.Transaction;
 import com.rbaun.banking.repository.AccountRepository;
@@ -42,7 +43,7 @@ public class AccountServiceImpl implements AccountService {
         Optional<Account> accountFoundById = accountRepository.findById(id);
         if (accountFoundById.isEmpty()) {
             logger.error("Account with id {} not found", id);
-            throw new AccountNotFoundException("Account with id " + id + " not found");
+            throw new AccountNotFoundException(AccountErrorMessage.ACCOUNT_NOT_FOUND.getMessage());
         }
 
         return accountFoundById.get();
@@ -53,7 +54,7 @@ public class AccountServiceImpl implements AccountService {
         Optional<Account> accountFoundByAccountNumber = accountRepository.findByAccountNumber(accountNumber);
         if (accountFoundByAccountNumber.isEmpty()) {
             logger.error("Account with account number {} not found", accountNumber);
-            throw new AccountNotFoundException("Account with account number " + accountNumber + " not found");
+            throw new AccountNotFoundException(AccountErrorMessage.ACCOUNT_NOT_FOUND.getMessage());
         }
 
         return accountFoundByAccountNumber.get();

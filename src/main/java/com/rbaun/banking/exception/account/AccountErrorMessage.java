@@ -1,4 +1,4 @@
-package com.rbaun.banking.controller.account.exception;
+package com.rbaun.banking.exception.account;
 
 public enum AccountErrorMessage {
     ACCOUNT_NOT_FOUND("Account not found"),

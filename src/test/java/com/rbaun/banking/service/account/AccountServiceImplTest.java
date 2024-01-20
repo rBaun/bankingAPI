@@ -1,7 +1,7 @@
 package com.rbaun.banking.service.account;
 
-import com.rbaun.banking.controller.account.exception.AccountNotFoundException;
-import com.rbaun.banking.controller.account.exception.DuplicateAccountException;
+import com.rbaun.banking.exception.account.AccountNotFoundException;
+import com.rbaun.banking.exception.account.DuplicateAccountException;
 import com.rbaun.banking.model.account.Account;
 import com.rbaun.banking.model.account.Transaction;
 import com.rbaun.banking.model.enums.AccountType;

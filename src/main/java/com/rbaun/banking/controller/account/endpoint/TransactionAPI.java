@@ -12,7 +12,7 @@ import java.util.List;
 public interface TransactionAPI {
 
     String BASE_URL = AccountAPI.BASE_URL + "/{accountNumber}/transactions";
-    String GET_ALL_TRANSACTIONS_URL = "/all";
+    String GET_ALL_TRANSACTIONS_URL = "";
 
     @GetMapping(GET_ALL_TRANSACTIONS_URL)
     ResponseEntity<List<TransactionResponse>> getAllTransactions(@PathVariable String accountNumber);

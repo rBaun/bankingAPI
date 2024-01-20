@@ -11,4 +11,8 @@ public record AccountResponse(
     public AccountResponse(Account account) {
         this(account.getAccountNumber(), account.getAccountType(), account.getBalance());
     }
+
+    public static AccountResponse from(Account account) {
+        return new AccountResponse(account);
+    }
 }
