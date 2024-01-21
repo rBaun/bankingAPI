@@ -93,6 +93,10 @@ public interface AccountControllerAPI extends BaseAPI {
                     @ApiResponse(
                             responseCode = "400",
                             description = "Invalid request body"
+                    ),
+                    @ApiResponse(
+                            responseCode = "409",
+                            description = "Account already exists"
                     )
             }
     )
@@ -150,6 +154,10 @@ public interface AccountControllerAPI extends BaseAPI {
                     @ApiResponse(
                             responseCode = "404",
                             description = "Account not found"
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Invalid amount"
                     )
             }
     )
@@ -169,6 +177,10 @@ public interface AccountControllerAPI extends BaseAPI {
                     @ApiResponse(
                             responseCode = "404",
                             description = "Account not found"
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Invalid amount or insufficient funds"
                     )
             }
     )

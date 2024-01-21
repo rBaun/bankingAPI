@@ -120,6 +120,10 @@ public interface CustomerControllerAPI extends BaseAPI {
                     @ApiResponse(
                             responseCode = "400",
                             description = "Invalid request"
+                    ),
+                    @ApiResponse(
+                            responseCode = "409",
+                            description = "Customer already exists with the same email, phone number, or social security number"
                     )
             }
     )
