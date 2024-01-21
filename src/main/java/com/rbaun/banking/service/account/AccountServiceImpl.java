@@ -5,7 +5,7 @@ import com.rbaun.banking.exception.account.AccountNotFoundException;
 import com.rbaun.banking.exception.account.DuplicateAccountException;
 import com.rbaun.banking.model.account.Account;
 import com.rbaun.banking.model.account.Transaction;
-import com.rbaun.banking.repository.AccountRepository;
+import com.rbaun.banking.repository.account.AccountRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

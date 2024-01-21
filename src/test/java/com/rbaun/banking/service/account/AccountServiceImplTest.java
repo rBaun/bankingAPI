@@ -5,7 +5,7 @@ import com.rbaun.banking.exception.account.DuplicateAccountException;
 import com.rbaun.banking.model.account.Account;
 import com.rbaun.banking.model.account.Transaction;
 import com.rbaun.banking.model.enums.AccountType;
-import com.rbaun.banking.repository.AccountRepository;
+import com.rbaun.banking.repository.account.AccountRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

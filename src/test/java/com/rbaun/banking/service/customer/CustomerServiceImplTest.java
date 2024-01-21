@@ -3,7 +3,7 @@ package com.rbaun.banking.service.customer;
 import com.rbaun.banking.controller.customer.request.LookupCustomerRequest;
 import com.rbaun.banking.exception.customer.CustomerNotFoundException;
 import com.rbaun.banking.model.customer.Customer;
-import com.rbaun.banking.repository.CustomerRepository;
+import com.rbaun.banking.repository.customer.CustomerRepository;
 import com.rbaun.banking.service.customer.strategy.LookupCustomerStrategy;
 import com.rbaun.banking.service.customer.strategy.LookupCustomerStrategyFactory;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +11,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.jpa.domain.Specification;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,11 +51,27 @@ public class CustomerServiceImplTest {
     }
 
     @Test
+    public void searchCustomers_GivenMultipleMatchingCustomersExists_ReturnsMatchingCustomers() {
+        // Given
+        String searchTerm = "John";
+        Customer customer1 = new Customer("John", "john@gmail.com", "1234567890", "Address 1", null, "123");
+        Customer customer2 = new Customer("John", "john2@gmail.com", "0987654321", "Address 2", null, "456");
+        List<Customer> expectedCustomers = Arrays.asList(customer1, customer2);
+
+        // When
+        when(customerRepository.findAll(any(Specification.class))).thenReturn(expectedCustomers);
+        List<Customer> actualCustomers = customerService.searchCustomers(searchTerm);
+
+        // Then
+        assertEquals(expectedCustomers, actualCustomers);
+    }
+
+    @Test
     public void searchCustomers_GivenMatchingCustomerExists_ReturnsMatchingCustomer() {
         // Setup
         String searchTerm = "John";
         Customer customer = new Customer("John", "john@gmail.com", "1234567890", "Address 1", null, "123");
-        when(customerRepository.findAll()).thenReturn(List.of(customer));
+        when(customerRepository.findAll(any(Specification.class))).thenReturn(List.of(customer));
 
         // Execute
         List<Customer> result = customerService.searchCustomers(searchTerm);
@@ -68,7 +86,7 @@ public class CustomerServiceImplTest {
         // Setup
         String searchTerm = "John";
         Customer customer = new Customer("John", "john@gmail.com", "1234567890", "Address 1", null, "123");
-        when(customerRepository.findAll()).thenReturn(List.of(customer));
+        when(customerRepository.findAll(any(Specification.class))).thenReturn(List.of(customer));
 
         // Execute
         List<Customer> result = customerService.searchCustomers(searchTerm);
@@ -83,7 +101,7 @@ public class CustomerServiceImplTest {
         // Setup
         String searchTerm = "john@gmail.com";
         Customer customer = new Customer("John", "john@gmail.com", "1234567890", "Address 1", null, "123");
-        when(customerRepository.findAll()).thenReturn(List.of(customer));
+        when(customerRepository.findAll(any(Specification.class))).thenReturn(List.of(customer));
 
         // Execute
         List<Customer> result = customerService.searchCustomers(searchTerm);
@@ -98,7 +116,7 @@ public class CustomerServiceImplTest {
         // Setup
         String searchTerm = "Address 1";
         Customer customer = new Customer("John", "john@gmail.com", "1234567890", "Address 1", null, "123");
-        when(customerRepository.findAll()).thenReturn(List.of(customer));
+        when(customerRepository.findAll(any(Specification.class))).thenReturn(List.of(customer));
 
         // Execute
         List<Customer> result = customerService.searchCustomers(searchTerm);
@@ -113,7 +131,7 @@ public class CustomerServiceImplTest {
         // Setup
         String searchTerm = "1234567890";
         Customer customer = new Customer("John", "john@gmail.com", "1234567890", "Address 1", null, "123");
-        when(customerRepository.findAll()).thenReturn(List.of(customer));
+        when(customerRepository.findAll(any(Specification.class))).thenReturn(List.of(customer));
 
         // Execute
         List<Customer> result = customerService.searchCustomers(searchTerm);

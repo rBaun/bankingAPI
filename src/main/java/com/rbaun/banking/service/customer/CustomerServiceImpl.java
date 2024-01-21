@@ -2,14 +2,18 @@ package com.rbaun.banking.service.customer;
 
 import com.rbaun.banking.exception.customer.*;
 import com.rbaun.banking.model.customer.Customer;
-import com.rbaun.banking.repository.CustomerRepository;
-import com.rbaun.banking.service.customer.specification.*;
+import com.rbaun.banking.repository.customer.CustomerRepository;
+import com.rbaun.banking.repository.customer.specification.AddressSelector;
+import com.rbaun.banking.repository.customer.specification.EmailSelector;
+import com.rbaun.banking.repository.customer.specification.NameSelector;
+import com.rbaun.banking.repository.customer.specification.PhoneNumberSelector;
 import com.rbaun.banking.service.customer.strategy.LookupCustomerStrategy;
 import com.rbaun.banking.util.EmailUtil;
 import com.rbaun.banking.util.PhoneNumberUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,13 +38,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<Customer> searchCustomers(String searchTerm) {
-        CustomerSpecification searchSpec =
-                new NameSelector(searchTerm)
-                        .or(new EmailSelector(searchTerm))
-                        .or(new AddressSelector(searchTerm))
-                        .or(new PhoneNumberSelector(searchTerm));
+        Specification<Customer> searchSpec = new NameSelector(searchTerm)
+                .or(new EmailSelector(searchTerm))
+                .or(new AddressSelector(searchTerm))
+                .or(new PhoneNumberSelector(searchTerm));
 
-        return customerRepository.findAll().stream().filter(searchSpec::isSatisfiedBy).toList();
+        return customerRepository.findAll(searchSpec);
     }
 
     @Override
