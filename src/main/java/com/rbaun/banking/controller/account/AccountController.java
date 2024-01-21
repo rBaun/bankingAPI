@@ -1,9 +1,5 @@
 package com.rbaun.banking.controller.account;
 
-import com.rbaun.banking.controller.BaseController;
-import com.rbaun.banking.controller.account.endpoint.AccountAPI;
-import com.rbaun.banking.controller.account.endpoint.AccountNumberAPI;
-import com.rbaun.banking.controller.account.endpoint.TransactionAPI;
 import com.rbaun.banking.controller.account.request.CreateAccountRequest;
 import com.rbaun.banking.controller.account.response.AccountBalanceResponse;
 import com.rbaun.banking.controller.account.response.AccountResponse;
@@ -11,6 +7,9 @@ import com.rbaun.banking.controller.account.response.DeleteAccountResponse;
 import com.rbaun.banking.controller.account.response.TransactionResponse;
 import com.rbaun.banking.model.account.Account;
 import com.rbaun.banking.service.account.AccountService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +19,25 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class AccountController extends BaseController implements AccountAPI, AccountNumberAPI, TransactionAPI {
+public class AccountController implements AccountControllerAPI {
 
     private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
     @Autowired
     private AccountService accountService;
 
+    @Operation(summary = "Get a list of all accounts", responses = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "List of accounts",
+                    content = @Content(
+                            mediaType = "application/json"
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "No accounts found"
+            )
+    })
     @Override
     public ResponseEntity<List<AccountResponse>> getAllAccounts() {
         logger.info("Got request for all accounts");

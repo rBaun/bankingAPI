@@ -10,7 +10,7 @@ public record UpdateCustomerRequest(
         @NotBlank String address,
         @NotBlank String email,
         @NotBlank String phoneNumber,
-        @NotBlank String socialSecurityNumber,
+        @NotBlank String socialSecurityNumberToUpdate,
         LocalDate dateOfBirth
 ) {
 }

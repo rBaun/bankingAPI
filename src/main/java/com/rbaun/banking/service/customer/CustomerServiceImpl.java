@@ -6,6 +6,7 @@ import com.rbaun.banking.repository.CustomerRepository;
 import com.rbaun.banking.service.customer.specification.*;
 import com.rbaun.banking.service.customer.strategy.LookupCustomerRequest;
 import com.rbaun.banking.service.customer.strategy.LookupCustomerStrategy;
+import com.rbaun.banking.service.customer.strategy.LookupCustomerStrategyFactory;
 import com.rbaun.banking.util.EmailUtil;
 import com.rbaun.banking.util.PhoneNumberUtil;
 import org.slf4j.Logger;
@@ -112,7 +113,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void deleteCustomer(LookupCustomerRequest request) {
-        LookupCustomerStrategy lookupCustomerStrategy = request.getLookupCustomerStrategy();
+        LookupCustomerStrategy lookupCustomerStrategy = LookupCustomerStrategyFactory.from(request);
         Customer customer = lookupCustomerStrategy.findCustomer(this, request);
         customerRepository.delete(customer);
     }
