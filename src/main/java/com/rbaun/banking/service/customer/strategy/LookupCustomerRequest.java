@@ -8,15 +8,4 @@ public record LookupCustomerRequest(
         String phoneNumber,
         String socialSecurityNumber
 ) {
-    public LookupCustomerStrategy getLookupCustomerStrategy() {
-        if (email() != null) {
-            return new EmailLookupCustomerStrategy();
-        } else if (phoneNumber() != null) {
-            return new PhoneNumberLookupCustomerStrategy();
-        } else if (socialSecurityNumber() != null) {
-            return new SocialSecurityNumberLookupCustomerStrategy();
-        } else {
-            throw new IllegalStateException("LookupCustomerStrategy not found");
-        }
-    }
 }

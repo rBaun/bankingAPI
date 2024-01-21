@@ -1,6 +1,5 @@
 package com.rbaun.banking.controller.customer;
 
-import com.rbaun.banking.controller.customer.endpoint.CustomerAPI;
 import com.rbaun.banking.controller.customer.request.CreateCustomerRequest;
 import com.rbaun.banking.controller.customer.request.UpdateCustomerRequest;
 import com.rbaun.banking.controller.customer.response.CustomerResponse;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class CustomerController implements CustomerAPI {
+public class CustomerController implements CustomerControllerAPI {
 
     private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
     @Autowired
@@ -62,7 +61,7 @@ public class CustomerController implements CustomerAPI {
     @Override
     public ResponseEntity<CustomerResponse> updateCustomer(UpdateCustomerRequest request) {
         logger.info("Got request to update customer: {}", request);
-        Customer customer = customerService.updateCustomer(new Customer(request), request.socialSecurityNumber());
+        Customer customer = customerService.updateCustomer(new Customer(request), request.socialSecurityNumberToUpdate());
         logger.info("Updated customer: {}", customer);
 
         return ResponseEntity.ok(CustomerResponse.from(customer));
