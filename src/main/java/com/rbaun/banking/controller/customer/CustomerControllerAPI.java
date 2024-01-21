@@ -2,10 +2,10 @@ package com.rbaun.banking.controller.customer;
 
 import com.rbaun.banking.controller.BaseAPI;
 import com.rbaun.banking.controller.customer.request.CreateCustomerRequest;
+import com.rbaun.banking.controller.customer.request.LookupCustomerRequest;
 import com.rbaun.banking.controller.customer.request.UpdateCustomerRequest;
 import com.rbaun.banking.controller.customer.response.CustomerResponse;
 import com.rbaun.banking.controller.customer.response.DeleteCustomerResponse;
-import com.rbaun.banking.service.customer.strategy.LookupCustomerRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

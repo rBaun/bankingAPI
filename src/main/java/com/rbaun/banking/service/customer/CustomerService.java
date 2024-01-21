@@ -1,7 +1,7 @@
 package com.rbaun.banking.service.customer;
 
 import com.rbaun.banking.model.customer.Customer;
-import com.rbaun.banking.service.customer.strategy.LookupCustomerRequest;
+import com.rbaun.banking.service.customer.strategy.LookupCustomerStrategy;
 
 import java.util.List;
 
@@ -21,6 +21,6 @@ public interface CustomerService {
 
     Customer updateCustomer(Customer customer, String socialSecurityNumber);
 
-    void deleteCustomer(LookupCustomerRequest request);
+    void deleteCustomer(LookupCustomerStrategy strategy, String value);
 
 }

@@ -1,6 +1,6 @@
 package com.rbaun.banking.controller.customer.response;
 
-import com.rbaun.banking.service.customer.strategy.LookupCustomerRequest;
+import com.rbaun.banking.controller.customer.request.LookupCustomerRequest;
 
 public record DeleteCustomerResponse(
         String email,

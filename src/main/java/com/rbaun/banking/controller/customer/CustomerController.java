@@ -1,12 +1,13 @@
 package com.rbaun.banking.controller.customer;
 
 import com.rbaun.banking.controller.customer.request.CreateCustomerRequest;
+import com.rbaun.banking.controller.customer.request.LookupCustomerRequest;
 import com.rbaun.banking.controller.customer.request.UpdateCustomerRequest;
 import com.rbaun.banking.controller.customer.response.CustomerResponse;
 import com.rbaun.banking.controller.customer.response.DeleteCustomerResponse;
 import com.rbaun.banking.model.customer.Customer;
 import com.rbaun.banking.service.customer.CustomerService;
-import com.rbaun.banking.service.customer.strategy.LookupCustomerRequest;
+import com.rbaun.banking.service.customer.strategy.LookupCustomerStrategyFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class CustomerController implements CustomerControllerAPI {
     @Override
     public ResponseEntity<DeleteCustomerResponse> deleteCustomer(LookupCustomerRequest request) {
         logger.info("Got request to delete customer: {}", request);
-        customerService.deleteCustomer(request);
+        customerService.deleteCustomer(LookupCustomerStrategyFactory.from(request), request.getLookupValue());
         logger.info("Deleted customer: {}", request);
 
         return ResponseEntity.ok(DeleteCustomerResponse.from(request));

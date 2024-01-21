@@ -1,9 +1,11 @@
 package com.rbaun.banking.service.customer;
 
+import com.rbaun.banking.controller.customer.request.LookupCustomerRequest;
 import com.rbaun.banking.exception.customer.CustomerNotFoundException;
 import com.rbaun.banking.model.customer.Customer;
 import com.rbaun.banking.repository.CustomerRepository;
-import com.rbaun.banking.service.customer.strategy.LookupCustomerRequest;
+import com.rbaun.banking.service.customer.strategy.LookupCustomerStrategy;
+import com.rbaun.banking.service.customer.strategy.LookupCustomerStrategyFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -231,7 +233,9 @@ public class CustomerServiceImplTest {
         doNothing().when(customerRepository).delete(customer);
 
         // Execute
-        customerService.deleteCustomer(new LookupCustomerRequest(null, null, socialSecurityNumber));
+        LookupCustomerRequest request = new LookupCustomerRequest(null, null, socialSecurityNumber);
+        LookupCustomerStrategy strategy = LookupCustomerStrategyFactory.from(request);
+        customerService.deleteCustomer(strategy, request.getLookupValue());
 
         // Verify
         verify(customerRepository, times(1)).delete(customer);
