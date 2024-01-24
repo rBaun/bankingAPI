@@ -10,6 +10,7 @@ import com.rbaun.banking.model.enums.AccountType;
  * @param balance
  */
 public record AccountResponse(
+        String title,
         String accountNumber,
         AccountType accountType,
         double balance
@@ -19,7 +20,7 @@ public record AccountResponse(
      * @param account - the account to map
      */
     public AccountResponse(Account account) {
-        this(account.getAccountNumber(), account.getAccountType(), account.getBalance());
+        this(account.getTitle(), account.getAccountNumber(), account.getAccountType(), account.getBalance());
     }
 
     /**

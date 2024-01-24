@@ -15,8 +15,8 @@ import java.util.List;
 @Entity(name = "Accounts")
 public class Account extends BaseEntity {
 
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<Transaction> transactionList = new ArrayList<>();
+    @Column(nullable = false)
+    private String title;
     @Column(unique = true)
     private String accountNumber;
     @Enumerated(EnumType.STRING)
@@ -26,17 +26,21 @@ public class Account extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private Customer customer;
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Transaction> transactionList = new ArrayList<>();
 
     public Account() {
     }
 
     public Account(CreateAccountRequest createAccountRequest) {
+        this.title = createAccountRequest.title();
         this.accountNumber = createAccountRequest.accountNumber();
         this.accountType = createAccountRequest.accountType();
         this.balance = createAccountRequest.balance();
     }
 
-    public Account(String accountNumber, AccountType accountType, double balance) {
+    public Account(String title, String accountNumber, AccountType accountType, double balance) {
+        this.title = title;
         this.accountNumber = accountNumber;
         this.accountType = accountType;
         this.balance = balance;
@@ -125,10 +129,19 @@ public class Account extends BaseEntity {
         this.customer = customer;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     @Override
     public String toString() {
         return "Account{" +
                 "id='" + super.getId() + '\'' +
+                ", title='" + title + '\'' +
                 ", accountNumber='" + accountNumber + '\'' +
                 ", accountType='" + accountType + '\'' +
                 ", balance='" + balance + '\'' +
