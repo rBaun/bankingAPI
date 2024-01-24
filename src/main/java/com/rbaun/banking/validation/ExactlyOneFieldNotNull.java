@@ -7,6 +7,9 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+/**
+ * Validation annotation to ensure that exactly one field is not null
+ */
 @Documented
 @Constraint(validatedBy = ExactlyOneFieldNotNullValidator.class)
 @Target({ElementType.TYPE})

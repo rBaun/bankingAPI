@@ -13,6 +13,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Entity representing a customer in the banking application
+ */
 @Entity(name = "Customers")
 public class Customer extends BaseEntity {
 

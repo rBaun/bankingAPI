@@ -10,6 +10,11 @@ import java.util.List;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    /**
+     * Handle @{@link BindException} and return a @{@link ResponseEntity} with a list of error messages
+     * @param ex - the @{@link BindException} to handle
+     * @return @{@link ResponseEntity} with a list of error messages indicating which fields failed validation
+     */
     @ExceptionHandler(BindException.class)
     public ResponseEntity<String> handleBindException(BindException ex) {
         List<String> errorMessages = ex.getFieldErrors().stream()

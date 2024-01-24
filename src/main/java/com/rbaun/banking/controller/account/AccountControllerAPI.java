@@ -42,6 +42,10 @@ public interface AccountControllerAPI extends BaseAPI {
     String BASE_TRANSACTION_API = "/{accountNumber}/transactions";
     String GET_ALL_TRANSACTIONS_URL = BASE_TRANSACTION_API + "";
 
+    /**
+     * Request a list of all the accounts
+     * @return @{@link ResponseEntity} with a list of @{@link AccountResponse}
+     */
     @Operation(
             summary = "Get a list of all accounts",
             responses = {
@@ -61,6 +65,11 @@ public interface AccountControllerAPI extends BaseAPI {
     @GetMapping(GET_ALL_ACCOUNTS_URL)
     ResponseEntity<List<AccountResponse>> getAllAccounts();
 
+    /**
+     * Request to get an account by id
+     * @param id - the id of the account
+     * @return @{@link ResponseEntity} with an @{@link AccountResponse}
+     */
     @Operation(
             summary = "Get an account by id",
             responses = {
@@ -80,6 +89,11 @@ public interface AccountControllerAPI extends BaseAPI {
     @GetMapping(GET_ACCOUNT_BY_ID_URL)
     ResponseEntity<AccountResponse> getAccountById(@PathVariable Long id);
 
+    /**
+     * Request to create a new account
+     * @param request - the request body
+     * @return @{@link ResponseEntity} with an @{@link AccountResponse}
+     */
     @Operation(
             summary = "Create a new account",
             responses = {
@@ -103,6 +117,11 @@ public interface AccountControllerAPI extends BaseAPI {
     @PostMapping(CREATE_ACCOUNT_URL)
     ResponseEntity<AccountResponse> createAccount(@Valid @RequestBody CreateAccountRequest request);
 
+    /**
+     * Request to delete an account by account number
+     * @param accountNumber - the account number of the account to delete
+     * @return @{@link ResponseEntity} with a @{@link DeleteAccountResponse}
+     */
     @Operation(
             summary = "Delete an account by account number",
             responses = {
@@ -122,6 +141,11 @@ public interface AccountControllerAPI extends BaseAPI {
     @DeleteMapping(DELETE_ACCOUNT_URL)
     ResponseEntity<DeleteAccountResponse> deleteAccount(@PathVariable String accountNumber);
 
+    /**
+     * Request to get an account by account number
+     * @param accountNumber - the account number to find account by
+     * @return @{@link ResponseEntity} with an @{@link AccountResponse}
+     */
     @Operation(
             summary = "Get an account by account number",
             responses = {
@@ -141,6 +165,12 @@ public interface AccountControllerAPI extends BaseAPI {
     @GetMapping(GET_ACCOUNT_BY_ACCOUNT_NUMBER_URL)
     ResponseEntity<AccountResponse> getAccountByAccountNumber(@PathVariable String accountNumber);
 
+    /**
+     * Request to deposit money into an account
+     * @param accountNumber - the account number to deposit money into
+     * @param amount - the amount to deposit
+     * @return @{@link ResponseEntity} with an @{@link AccountBalanceResponse}
+     */
     @Operation(
             summary = "Deposit money into account",
             responses = {
@@ -164,6 +194,12 @@ public interface AccountControllerAPI extends BaseAPI {
     @PutMapping(DEPOSIT_URL)
     ResponseEntity<AccountBalanceResponse> deposit(@PathVariable String accountNumber, @PathVariable double amount);
 
+    /**
+     * Request to withdraw money from an account
+     * @param accountNumber - the account number to withdraw money from
+     * @param amount - the amount to withdraw
+     * @return @{@link ResponseEntity} with an @{@link AccountBalanceResponse}
+     */
     @Operation(
             summary = "Withdraw money from account",
             responses = {
@@ -187,6 +223,11 @@ public interface AccountControllerAPI extends BaseAPI {
     @PutMapping(WITHDRAW_URL)
     ResponseEntity<AccountBalanceResponse> withdraw(@PathVariable String accountNumber, @PathVariable double amount);
 
+    /**
+     * Request to get all transactions for an account
+     * @param accountNumber - the account number to get transactions for
+     * @return @{@link ResponseEntity} with a list of @{@link TransactionResponse}
+     */
     @Operation(
             summary = "Get all transactions for an account",
             responses = {

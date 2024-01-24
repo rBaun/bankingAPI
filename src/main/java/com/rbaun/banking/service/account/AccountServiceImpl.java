@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Service class for {@link Account} objects.
+ * Responsible for the business logic for the account entity
  */
 @Service
 public class AccountServiceImpl implements AccountService {

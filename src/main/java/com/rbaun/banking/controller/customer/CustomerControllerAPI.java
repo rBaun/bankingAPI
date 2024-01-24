@@ -27,6 +27,10 @@ public interface CustomerControllerAPI extends BaseAPI {
     String DELETE_CUSTOMER_URL = "/delete/{id}";
     String UPDATE_CUSTOMER_URL = "/update/{id}";
 
+    /**
+     * Request a list of all the customers
+     * @return @{@link ResponseEntity} with a list of @{@link CustomerResponse}
+     */
     @Operation(
             summary = "Get a list of all customers",
             responses = {
@@ -46,6 +50,11 @@ public interface CustomerControllerAPI extends BaseAPI {
     @GetMapping(GET_ALL_CUSTOMERS_URL)
     ResponseEntity<List<CustomerResponse>> getAllCustomers();
 
+    /**
+     * Request to search for a customer by a search term
+     * @param searchTerm - the search term to match customers by
+     * @return @{@link ResponseEntity} with a list of @{@link CustomerResponse} matching the search term
+     */
     @Operation(
             summary = "Get a list of customers by search term",
             responses = {
@@ -65,6 +74,11 @@ public interface CustomerControllerAPI extends BaseAPI {
     @GetMapping(GET_CUSTOMERS_BY_SEARCH_TERM_URL)
     ResponseEntity<List<CustomerResponse>> getCustomersBySearchTerm(@PathVariable String searchTerm);
 
+    /**
+     * Request to create a new customer
+     * @param request - the @{@link CreateCustomerRequest} containing the information to create a new customer
+     * @return @{@link ResponseEntity} with a @{@link CustomerResponse} containing the newly created customer
+     */
     @Operation(
             summary = "Create a new customer",
             responses = {
@@ -88,6 +102,11 @@ public interface CustomerControllerAPI extends BaseAPI {
     @PostMapping(CREATE_CUSTOMER_URL)
     ResponseEntity<CustomerResponse> createCustomer(@Valid @RequestBody CreateCustomerRequest request);
 
+    /**
+     * Request to delete a customer by id
+     * @param request - the @{@link LookupCustomerRequest} containing the id of the customer to delete
+     * @return @{@link ResponseEntity} with a @{@link DeleteCustomerResponse} containing the id of the deleted customer
+     */
     @Operation(
             summary = "Delete a customer by id",
             responses = {
@@ -107,6 +126,11 @@ public interface CustomerControllerAPI extends BaseAPI {
     @DeleteMapping(DELETE_CUSTOMER_URL)
     ResponseEntity<DeleteCustomerResponse> deleteCustomer(@RequestBody LookupCustomerRequest request);
 
+    /**
+     * Request to update a customer by social security number
+     * @param request - the @{@link UpdateCustomerRequest} containing the information to update the customer
+     * @return @{@link ResponseEntity} with a @{@link CustomerResponse} containing the updated customer
+     */
     @Operation(
             summary = "Update a customer by social security number",
             responses = {

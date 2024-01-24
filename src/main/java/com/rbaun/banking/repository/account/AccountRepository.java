@@ -5,9 +5,21 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
+/**
+ * Repository for the account entity
+ */
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
+    /**
+     * Find an account by the account number
+     * @param accountNumber the account number
+     * @return the account matching the account number
+     */
     Optional<Account> findByAccountNumber(String accountNumber);
 
+    /**
+     * Delete an account by the account number
+     * @param accountNumber the account number of the account to delete
+     */
     void deleteByAccountNumber(String accountNumber);
 }

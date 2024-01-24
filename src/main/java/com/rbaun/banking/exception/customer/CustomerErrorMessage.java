@@ -1,5 +1,8 @@
 package com.rbaun.banking.exception.customer;
 
+/**
+ * Enum for customer error messages
+ */
 public enum CustomerErrorMessage {
     CUSTOMER_NOT_FOUND("Customer not found"),
     CUSTOMER_INVALID_EMAIL("Customer email is invalid"),

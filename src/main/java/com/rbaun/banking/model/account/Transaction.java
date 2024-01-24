@@ -4,6 +4,9 @@ import com.rbaun.banking.model.BaseEntity;
 import com.rbaun.banking.model.enums.TransactionType;
 import jakarta.persistence.*;
 
+/**
+ * Entity representing a transaction from the customer's account in the banking application
+ */
 @Entity(name = "Transactions")
 public class Transaction extends BaseEntity {
 

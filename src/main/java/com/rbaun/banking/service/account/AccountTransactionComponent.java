@@ -13,6 +13,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Responsible for the business logic of performing transactions on an account
+ */
 @Component
 public class AccountTransactionComponent {
 
@@ -20,6 +23,13 @@ public class AccountTransactionComponent {
     @Autowired
     private AccountRepository accountRepository;
 
+    /**
+     * Deposit money into an account
+     * @param account the account to deposit money into
+     * @param amount the amount to deposit
+     * @return the account with the updated balance
+     * @throws AmountInvalidException if the amount is less than or equal to 0
+     */
     @Transactional
     public Account deposit(Account account, double amount) {
         throwIfAmountIsNegative(amount);
@@ -29,6 +39,14 @@ public class AccountTransactionComponent {
         return accountRepository.save(account);
     }
 
+    /**
+     * Withdraw money from an account
+     * @param account the account to withdraw money from
+     * @param amount the amount to withdraw
+     * @return the account with the updated balance
+     * @throws AmountInvalidException if the amount is less than or equal to 0
+     * @throws InsufficientFundsException if the account has insufficient funds
+     */
     @Transactional
     public Account withdraw(Account account, double amount) {
         throwIfAmountIsNegative(amount);

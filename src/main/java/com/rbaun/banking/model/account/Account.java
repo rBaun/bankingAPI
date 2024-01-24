@@ -9,6 +9,9 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Entity that represents a customer's account in the banking application
+ */
 @Entity(name = "Accounts")
 public class Account extends BaseEntity {
 
@@ -39,26 +42,41 @@ public class Account extends BaseEntity {
         this.balance = balance;
     }
 
+    /**
+     * Deposit money into account
+     * @param amount Amount to deposit
+     */
     public void deposit(double amount) {
         this.setBalance(this.getBalance() + amount);
     }
 
+    /**
+     * Withdraw money from account
+     * @param amount Amount to withdraw
+     */
     public void withdraw(double amount) {
         this.setBalance(this.getBalance() - amount);
     }
 
+    /**
+     * Add transaction to account
+     * @param transaction Transaction to add
+     */
     public void addTransaction(Transaction transaction) {
         transaction.setAccount(this);
         this.transactionList.add(transaction);
     }
 
+    /**
+     * Add list of transactions to account
+     * @param transactionList List of transactions to add
+     */
     public void addTransactionList(List<Transaction> transactionList) {
         transactionList.forEach(this::addTransaction);
     }
 
     /**
      * Remove transaction from account, if exists on account
-     *
      * @param transaction Transaction to remove
      */
     public void removeTransaction(Transaction transaction) {

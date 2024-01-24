@@ -7,6 +7,9 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
+/**
+ * Specification for searching for customers by address
+ */
 public class AddressSelector implements Specification<Customer> {
 
     private final String searchTerm;

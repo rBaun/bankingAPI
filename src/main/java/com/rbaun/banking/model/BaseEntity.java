@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
+/**
+ * Base entity for all entities, such that they all have an id, created and updated timestamp
+ */
 @MappedSuperclass
 public abstract class BaseEntity {
 

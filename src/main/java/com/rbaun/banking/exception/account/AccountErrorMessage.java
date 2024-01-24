@@ -1,5 +1,8 @@
 package com.rbaun.banking.exception.account;
 
+/**
+ * Enum for account error messages
+ */
 public enum AccountErrorMessage {
     ACCOUNT_NOT_FOUND("Account not found"),
     INSUFFICIENT_FUNDS("Insufficient funds"),
