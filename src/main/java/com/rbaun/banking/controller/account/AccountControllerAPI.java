@@ -1,6 +1,6 @@
 package com.rbaun.banking.controller.account;
 
-import com.rbaun.banking.controller.BaseAPI;
+import com.rbaun.banking.controller.BaseControllerAPI;
 import com.rbaun.banking.controller.account.request.CreateAccountRequest;
 import com.rbaun.banking.controller.account.response.AccountBalanceResponse;
 import com.rbaun.banking.controller.account.response.AccountResponse;
@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * API for account operations
+ */
 @Tag(name = "Operations for the Account")
 @RequestMapping(AccountControllerAPI.BASE_ACCOUNT_URL)
-public interface AccountControllerAPI extends BaseAPI {
+public interface AccountControllerAPI extends BaseControllerAPI {
     /**
      * Account operations
      */

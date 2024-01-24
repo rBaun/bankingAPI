@@ -1,5 +1,6 @@
 package com.rbaun.banking.controller.customer;
 
+import com.rbaun.banking.controller.BaseController;
 import com.rbaun.banking.controller.customer.request.CreateCustomerRequest;
 import com.rbaun.banking.controller.customer.request.LookupCustomerRequest;
 import com.rbaun.banking.controller.customer.request.UpdateCustomerRequest;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class CustomerController implements CustomerControllerAPI {
+public class CustomerController extends BaseController implements CustomerControllerAPI {
 
     private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
     @Autowired
@@ -25,7 +26,7 @@ public class CustomerController implements CustomerControllerAPI {
 
     @Override
     public ResponseEntity<List<CustomerResponse>> getAllCustomers() {
-        logger.info("Got request for all customers");
+        logger.info("{} requested a list of all customers", getLoggedInUsername());
         List<CustomerResponse> customerList = customerService.findAllCustomers().stream().map(CustomerResponse::new).toList();
         logger.info("Found {} customers to return", customerList.size());
 
@@ -34,7 +35,7 @@ public class CustomerController implements CustomerControllerAPI {
 
     @Override
     public ResponseEntity<List<CustomerResponse>> getCustomersBySearchTerm(String searchTerm) {
-        logger.info("Got request to find customers with search term: {}", searchTerm);
+        logger.info("{} requested to find customers with search term: {}", getLoggedInUsername(), searchTerm);
         List<CustomerResponse> customerList = customerService.searchCustomers(searchTerm).stream().map(CustomerResponse::new).toList();
         logger.info("Found {} customers to return", customerList.size());
 
@@ -43,7 +44,7 @@ public class CustomerController implements CustomerControllerAPI {
 
     @Override
     public ResponseEntity<CustomerResponse> createCustomer(CreateCustomerRequest request) {
-        logger.info("Got request to create customer: {}", request);
+        logger.info("{} requested to create customer: {}", getLoggedInUsername(), request);
         Customer customer = customerService.createCustomer(new Customer(request));
         logger.info("Created customer: {}", customer);
 
@@ -52,7 +53,7 @@ public class CustomerController implements CustomerControllerAPI {
 
     @Override
     public ResponseEntity<DeleteCustomerResponse> deleteCustomer(LookupCustomerRequest request) {
-        logger.info("Got request to delete customer: {}", request);
+        logger.info("{} requested to delete customer: {}", getLoggedInUsername(), request);
         customerService.deleteCustomer(LookupCustomerStrategyFactory.from(request), request.getLookupValue());
         logger.info("Deleted customer: {}", request);
 
@@ -61,7 +62,7 @@ public class CustomerController implements CustomerControllerAPI {
 
     @Override
     public ResponseEntity<CustomerResponse> updateCustomer(UpdateCustomerRequest request) {
-        logger.info("Got request to update customer: {}", request);
+        logger.info("{} requested to update customer: {}", getLoggedInUsername(), request);
         Customer customer = customerService.updateCustomer(new Customer(request), request.socialSecurityNumberToUpdate());
         logger.info("Updated customer: {}", customer);
 

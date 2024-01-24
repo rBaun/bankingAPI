@@ -1,6 +1,6 @@
 package com.rbaun.banking.controller.customer;
 
-import com.rbaun.banking.controller.BaseAPI;
+import com.rbaun.banking.controller.BaseControllerAPI;
 import com.rbaun.banking.controller.customer.request.CreateCustomerRequest;
 import com.rbaun.banking.controller.customer.request.LookupCustomerRequest;
 import com.rbaun.banking.controller.customer.request.UpdateCustomerRequest;
@@ -18,7 +18,7 @@ import java.util.List;
 
 @Tag(name = "Operations for the Customer")
 @RequestMapping(CustomerControllerAPI.BASE_URL)
-public interface CustomerControllerAPI extends BaseAPI {
+public interface CustomerControllerAPI extends BaseControllerAPI {
 
     String BASE_URL = ROOT_URL + "/customers";
     String GET_ALL_CUSTOMERS_URL = "/all";
