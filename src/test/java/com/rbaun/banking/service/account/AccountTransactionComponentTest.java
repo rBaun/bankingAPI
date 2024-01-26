@@ -34,7 +34,7 @@ public class AccountTransactionComponentTest {
         // Setup account
         double initialBalance = 0.0;
         double amount = 100.0;
-        Account account = new Account("123", AccountType.CREDIT, initialBalance);
+        Account account = new Account("title", "123", AccountType.CREDIT, initialBalance);
 
         // Deposit the amount to the account
         when(accountRepository.save(account)).thenReturn(account);
@@ -52,7 +52,7 @@ public class AccountTransactionComponentTest {
         // Setup account
         double initialBalance = 0.0;
         double amount = 100.0;
-        Account account = new Account("123", AccountType.CREDIT, initialBalance);
+        Account account = new Account("title", "123", AccountType.CREDIT, initialBalance);
         int transactionListSize = account.getTransactionList().size();
 
         // Deposit the amount to the account
@@ -74,7 +74,7 @@ public class AccountTransactionComponentTest {
         // Setup account
         double initialBalance = 0.0;
         double amount = -100.0;
-        Account account = new Account("123", AccountType.CREDIT, initialBalance);
+        Account account = new Account("title", "123", AccountType.CREDIT, initialBalance);
 
         // Attempt to deposit the amount to the account and expect an exception
         assertThrows(AmountInvalidException.class, () -> accountTransactionComponent.deposit(account, amount));
@@ -85,7 +85,7 @@ public class AccountTransactionComponentTest {
         // Setup account
         double initialBalance = 100.0;
         double amount = 50.0;
-        Account account = new Account("123", AccountType.CREDIT, initialBalance);
+        Account account = new Account("title", "123", AccountType.CREDIT, initialBalance);
 
         // Withdraw the amount from the account
         when(accountRepository.save(account)).thenReturn(account);
@@ -101,7 +101,7 @@ public class AccountTransactionComponentTest {
         // Setup account
         double initialBalance = 100.0;
         double amount = 50.0;
-        Account account = new Account("123", AccountType.CREDIT, initialBalance);
+        Account account = new Account("title", "123", AccountType.CREDIT, initialBalance);
         int transactionListSize = account.getTransactionList().size();
 
         // Withdraw the amount from the account
@@ -123,7 +123,7 @@ public class AccountTransactionComponentTest {
         // Setup account
         double initialBalance = 100.0;
         double amount = -50.0;
-        Account account = new Account("123", AccountType.CREDIT, initialBalance);
+        Account account = new Account("title", "123", AccountType.CREDIT, initialBalance);
 
         // Attempt to withdraw the amount from the account and expect an exception
         assertThrows(AmountInvalidException.class, () -> accountTransactionComponent.withdraw(account, amount));
@@ -134,7 +134,7 @@ public class AccountTransactionComponentTest {
         // Setup account
         double initialBalance = 100.0;
         double amount = 200.0;
-        Account account = new Account("123", AccountType.CREDIT, initialBalance);
+        Account account = new Account("title", "123", AccountType.CREDIT, initialBalance);
 
         // Attempt to withdraw the amount from the account and expect an exception
         assertThrows(InsufficientFundsException.class, () -> accountTransactionComponent.withdraw(account, amount));

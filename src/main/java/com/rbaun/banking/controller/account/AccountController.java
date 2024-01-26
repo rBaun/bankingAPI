@@ -87,7 +87,7 @@ public class AccountController extends BaseController implements AccountControll
     @Override
     public ResponseEntity<AccountResponse> createAccount(CreateAccountRequest request) {
         logger.info("{} requested to create account: {}", getLoggedInUsername(), request);
-        Account account = accountService.createAccount(new Account(request));
+        Account account = accountService.createAccount(new Account(request), getLoggedInCustomer());
         logger.info("Created account: {}", account);
 
         return ResponseEntity.ok(AccountResponse.from(account));
