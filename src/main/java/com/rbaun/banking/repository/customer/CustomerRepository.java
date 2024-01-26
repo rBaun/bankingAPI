@@ -32,4 +32,11 @@ public interface CustomerRepository extends JpaRepository<Customer, Long>, JpaSp
      */
     Optional<Customer> findBySocialSecurityNumber(String socialSecurityNumber);
 
+    /**
+     * Find a customer by the username
+     * @param username the username to search for
+     * @return the customer matching the username
+     */
+    Optional<Customer> findByUsername(String username);
+
 }

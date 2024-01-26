@@ -1,4 +1,4 @@
-package com.rbaun.banking.auth;
+package com.rbaun.banking.model.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rbaun.banking.model.BaseEntity;
@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name = "user_info")
+@Entity(name = "users")
 public class UserInfo extends BaseEntity {
 
     private String username;

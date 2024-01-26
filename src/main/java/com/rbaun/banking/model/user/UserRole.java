@@ -1,4 +1,4 @@
-package com.rbaun.banking.auth;
+package com.rbaun.banking.model.user;
 
 import com.rbaun.banking.model.BaseEntity;
 import jakarta.persistence.Entity;

@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 /**
  * Entity representing a transaction from the customer's account in the banking application
  */
-@Entity(name = "Transactions")
+@Entity(name = "transactions")
 public class Transaction extends BaseEntity {
 
     @ManyToOne

@@ -80,4 +80,10 @@ public interface CustomerService {
      */
     void deleteCustomer(LookupCustomerStrategy strategy, String value);
 
+    /**
+     * Find a customer by the username
+     * @param username the username of the customer to find
+     * @return the customer matching the username
+     */
+    Customer findCustomerByUsername(String username);
 }

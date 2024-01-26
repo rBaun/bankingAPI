@@ -1,5 +1,5 @@
 -- Authentication Tables
-CREATE TABLE user_info (
+CREATE TABLE users (
     id INT IDENTITY(1,1) PRIMARY KEY,
     created DATETIME NOT NULL,
     updated DATETIME,
@@ -18,7 +18,7 @@ CREATE TABLE user_roles (
     user_id INT NOT NULL,
     role_id INT NOT NULL,
     PRIMARY KEY (user_id, role_id),
-    FOREIGN KEY (user_id) REFERENCES user_info(id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (role_id) REFERENCES roles(id)
 );
 
@@ -32,7 +32,8 @@ CREATE TABLE customers (
     phoneNumber NVARCHAR(255) NOT NULL UNIQUE,
     address NVARCHAR(255) NOT NULL,
     dateOfBirth DATE,
-    socialSecurityNumber NVARCHAR(255) NOT NULL UNIQUE
+    socialSecurityNumber NVARCHAR(255) NOT NULL UNIQUE,
+    username NVARCHAR(255) NOT NULL
 );
 
 CREATE TABLE accounts (
