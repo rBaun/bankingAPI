@@ -10,6 +10,7 @@ import jakarta.validation.constraints.NotNull;
  * @param accountType - the account type {@link AccountType}
  */
 public record CreateAccountRequest(
+        @NotBlank(message = "Account must have a title/name") String title,
         @NotBlank(message = "Account number is required") String accountNumber,
         @NotNull(message = "Account type is required") AccountType accountType,
         double balance

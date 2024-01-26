@@ -22,4 +22,9 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
      * @param accountNumber the account number of the account to delete
      */
     void deleteByAccountNumber(String accountNumber);
+
+    /**
+     * Find an account on the customer by the account title
+     */
+    Optional<Account> findByCustomer_IdAndTitle(Long customerId, String title);
 }

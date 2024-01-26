@@ -6,6 +6,7 @@ import com.rbaun.banking.exception.account.DuplicateAccountException;
 import com.rbaun.banking.exception.account.InsufficientFundsException;
 import com.rbaun.banking.model.account.Account;
 import com.rbaun.banking.model.account.Transaction;
+import com.rbaun.banking.model.customer.Customer;
 
 import java.util.List;
 
@@ -19,8 +20,9 @@ public interface AccountService {
      * @param account the account to create
      * @return the created account
      * @throws DuplicateAccountException if the account number is already created
+     * @throws DuplicateAccountException if the account name is already created for the customer
      */
-    Account createAccount(Account account);
+    Account createAccount(Account account, Customer customer);
 
     /**
      * Get an account by the id

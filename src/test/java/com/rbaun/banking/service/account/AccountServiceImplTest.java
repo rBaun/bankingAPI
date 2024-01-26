@@ -4,6 +4,7 @@ import com.rbaun.banking.exception.account.AccountNotFoundException;
 import com.rbaun.banking.exception.account.DuplicateAccountException;
 import com.rbaun.banking.model.account.Account;
 import com.rbaun.banking.model.account.Transaction;
+import com.rbaun.banking.model.customer.Customer;
 import com.rbaun.banking.model.enums.AccountType;
 import com.rbaun.banking.repository.account.AccountRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,7 +40,11 @@ public class AccountServiceImplTest {
     public void createAccount_ValidInput_CreatesAccount() {
         // Setup account
         String accountNumber = "123";
-        Account account = new Account(accountNumber, AccountType.CREDIT, 0.0);
+        String title = "Account name";
+        Account account = new Account(title, accountNumber, AccountType.CREDIT, 0.0);
+        Customer customer = new Customer();
+        customer.setId(1L);
+        account.setCustomer(customer);
 
         // Mock the behavior of accountRepository to return an empty Optional when findByAccountNumber is called
         when(accountRepository.findByAccountNumber(accountNumber)).thenReturn(Optional.empty());
@@ -48,32 +53,34 @@ public class AccountServiceImplTest {
         when(accountRepository.save(account)).thenReturn(account);
 
         // Call the createAccount method
-        Account createdAccount = accountService.createAccount(account);
+        Account createdAccount = accountService.createAccount(account, customer);
 
         // Verify that the created account has the correct account number, account type, and balance
+        assertEquals(title, createdAccount.getTitle());
         assertEquals(accountNumber, createdAccount.getAccountNumber());
         assertEquals(AccountType.CREDIT, createdAccount.getAccountType());
         assertEquals(0.0, createdAccount.getBalance());
+        assertEquals(customer, createdAccount.getCustomer());
     }
 
     @Test
     public void createAccount_AccountNumberExist_throwsDuplicateAccountException() {
         // Setup account
         String accountNumber = "123";
-        Account account = new Account(accountNumber, AccountType.CREDIT, 0.0);
+        Account account = new Account("title",accountNumber, AccountType.CREDIT, 0.0);
 
         // Mock the behavior of accountRepository to return an account when findByAccountNumber is called
         when(accountRepository.findByAccountNumber(accountNumber)).thenReturn(Optional.of(account));
 
         // Call the createAccount method and expect a DuplicateAccountException
-        assertThrows(DuplicateAccountException.class, () -> accountService.createAccount(account));
+        assertThrows(DuplicateAccountException.class, () -> accountService.createAccount(account, new Customer()));
     }
 
     @Test
     public void getAccountById_ValidId_ReturnsAccount() {
         // Setup account
         Long id = 1L;
-        Account account = new Account("123", AccountType.CREDIT, 0.0);
+        Account account = new Account("title", "123", AccountType.CREDIT, 0.0);
         account.setId(id);
 
         // Mock the behavior of accountRepository to return our account when findById is called
@@ -102,7 +109,7 @@ public class AccountServiceImplTest {
     public void getAccountByAccountNumber_ValidAccountNumber_ReturnsAccount() {
         // Setup account
         String accountNumber = "123";
-        Account account = new Account(accountNumber, AccountType.CREDIT, 0.0);
+        Account account = new Account("title", accountNumber, AccountType.CREDIT, 0.0);
 
         // Mock the behavior of accountRepository to return our account when findByAccountNumber is called
         when(accountRepository.findByAccountNumber(accountNumber)).thenReturn(Optional.of(account));
@@ -130,7 +137,7 @@ public class AccountServiceImplTest {
     public void deleteAccount_ValidAccountNumber_AccountDeleted() {
         // Setup account
         String accountNumber = "123";
-        Account account = new Account(accountNumber, AccountType.CREDIT, 0.0);
+        Account account = new Account("title", accountNumber, AccountType.CREDIT, 0.0);
 
         // Mock the behavior of accountRepository to return our account when findByAccountNumber is called
         when(accountRepository.findByAccountNumber(accountNumber)).thenReturn(Optional.of(account));
@@ -145,8 +152,8 @@ public class AccountServiceImplTest {
     @Test
     public void getAllAccounts_AccountsExist_ReturnsAllAccounts() {
         // Setup accounts
-        Account account1 = new Account("123", AccountType.CREDIT, 0.0);
-        Account account2 = new Account("456", AccountType.SAVINGS, 0.0);
+        Account account1 = new Account("title", "123", AccountType.CREDIT, 0.0);
+        Account account2 = new Account("title2", "456", AccountType.SAVINGS, 0.0);
         List<Account> accounts = List.of(account1, account2);
 
         // Mock the behavior of accountRepository to return our accounts when findAll is called
@@ -165,7 +172,7 @@ public class AccountServiceImplTest {
         String accountNumber = "123";
         double initialBalance = 0.0;
         double amount = 100.0;
-        Account account = new Account(accountNumber, AccountType.CREDIT, initialBalance);
+        Account account = new Account("title", accountNumber, AccountType.CREDIT, initialBalance);
 
         // Mock the behavior of accountRepository
         when(accountRepository.findByAccountNumber(accountNumber)).thenReturn(java.util.Optional.of(account));
@@ -197,7 +204,7 @@ public class AccountServiceImplTest {
         String accountNumber = "123";
         double initialBalance = 100.0;
         double amount = 50.0;
-        Account account = new Account(accountNumber, AccountType.CREDIT, initialBalance);
+        Account account = new Account("title", accountNumber, AccountType.CREDIT, initialBalance);
 
         // Mock the behavior of accountRepository
         when(accountRepository.findByAccountNumber(accountNumber)).thenReturn(java.util.Optional.of(account));
@@ -227,7 +234,7 @@ public class AccountServiceImplTest {
     public void getAccountTransactionHistory_AccountExist_ReturnsTransactionHistory() {
         // Setup account
         String accountNumber = "123";
-        Account account = new Account(accountNumber, AccountType.CREDIT, 0.0);
+        Account account = new Account("title", accountNumber, AccountType.CREDIT, 0.0);
 
         // Mock the behavior of accountRepository to return our account when findByAccountNumber is called
         when(accountRepository.findByAccountNumber(accountNumber)).thenReturn(Optional.of(account));
