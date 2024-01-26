@@ -1,5 +1,6 @@
 package com.rbaun.banking.auth;
 
+import com.rbaun.banking.model.user.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

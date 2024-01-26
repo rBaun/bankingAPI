@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Entity representing a customer in the banking application
  */
-@Entity(name = "Customers")
+@Entity(name = "customers")
 public class Customer extends BaseEntity {
 
     @Column(nullable = false)
@@ -31,7 +31,8 @@ public class Customer extends BaseEntity {
     private LocalDate dateOfBirth;
     @Column(unique = true, nullable = false)
     private String socialSecurityNumber;
-
+    @Column(nullable = false)
+    private String username;
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Account> accounts = new ArrayList<>();
 
@@ -128,5 +129,27 @@ public class Customer extends BaseEntity {
 
     public void setAccounts(List<Account> accounts) {
         this.accounts = accounts;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", socialSecurityNumber='" + socialSecurityNumber + '\'' +
+                ", username='" + username + '\'' +
+                ", accounts=" + accounts +
+                '}';
     }
 }

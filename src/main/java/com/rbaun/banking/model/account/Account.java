@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Entity that represents a customer's account in the banking application
  */
-@Entity(name = "Accounts")
+@Entity(name = "accounts")
 public class Account extends BaseEntity {
 
     @Column(nullable = false)

@@ -118,6 +118,19 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepository.delete(customer);
     }
 
+    @Override
+    public Customer findCustomerByUsername(String username) {
+        Optional<Customer> customerFoundByUsername = customerRepository.findByUsername(username);
+        if (customerFoundByUsername.isEmpty()) {
+            logger.info("{} has not registered as a customer yet", username);
+            return null;
+        }
+        Customer customer = customerFoundByUsername.get();
+        logger.info("{} has registered as a customer: {}", username, customer);
+
+        return customerFoundByUsername.get();
+    }
+
     private void throwIfEmailInvalid(String email) {
         if (!EmailUtil.isValidEmailAddress(email)) {
             logger.error("Customer email {} is invalid", email);
