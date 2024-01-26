@@ -1,5 +1,7 @@
 package com.rbaun.banking.auth;
 
+import com.rbaun.banking.model.user.UserInfo;
+import com.rbaun.banking.model.user.UserRole;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
