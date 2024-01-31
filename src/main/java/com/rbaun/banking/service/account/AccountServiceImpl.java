@@ -89,6 +89,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public Account transfer(String fromAccountNumber, String toAccountNumber, double amount) {
+        return null;
+    }
+
+    @Override
     public List<Transaction> getAccountTransactionHistory(String accountNumber) {
         Account account = getAccountByAccountNumber(accountNumber);
 
