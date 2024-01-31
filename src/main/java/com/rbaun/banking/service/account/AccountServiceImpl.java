@@ -90,7 +90,10 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account transfer(String fromAccountNumber, String toAccountNumber, double amount) {
-        return null;
+        Account fromAccount = getAccountByAccountNumber(fromAccountNumber);
+        Account toAccount = getAccountByAccountNumber(toAccountNumber);
+
+        return accountTransactionComponent.transfer(fromAccount, toAccount, amount);
     }
 
     @Override

@@ -59,6 +59,23 @@ public class AccountTransactionComponent {
         return accountRepository.save(account);
     }
 
+    /**
+     * Transfer money from one account to another
+     * @param fromAccount the account to transfer money from
+     * @param toAccount the account to transfer money to
+     * @param amount the amount to transfer
+     * @return the account to transfer from with the updated balance
+     * @throws AmountInvalidException if the amount is less than or equal to 0
+     * @throws InsufficientFundsException if the account has insufficient funds
+     */
+    @Transactional
+    public Account transfer(Account fromAccount, Account toAccount, double amount) {
+        fromAccount = withdraw(fromAccount, amount);
+        deposit(toAccount, amount);
+
+        return fromAccount;
+    }
+
     private void addTransactionToAccount(double amount, TransactionType transactionType, Account account) {
         Transaction transaction = new Transaction(amount, transactionType);
         account.addTransaction(transaction);
