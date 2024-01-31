@@ -1,5 +1,6 @@
 package com.rbaun.banking.service.customer;
 
+import com.rbaun.banking.assertion.customer.CustomerAssertions;
 import com.rbaun.banking.exception.customer.*;
 import com.rbaun.banking.model.customer.Customer;
 import com.rbaun.banking.repository.customer.CustomerRepository;
@@ -8,8 +9,6 @@ import com.rbaun.banking.repository.customer.specification.EmailSelector;
 import com.rbaun.banking.repository.customer.specification.NameSelector;
 import com.rbaun.banking.repository.customer.specification.PhoneNumberSelector;
 import com.rbaun.banking.service.customer.strategy.LookupCustomerStrategy;
-import com.rbaun.banking.util.EmailUtil;
-import com.rbaun.banking.util.PhoneNumberUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +23,10 @@ import java.util.Optional;
 public class CustomerServiceImpl implements CustomerService {
 
     private static final Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
-    private final CustomerRepository customerRepository;
-
     @Autowired
-    public CustomerServiceImpl(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
-    }
+    private CustomerRepository customerRepository;
+    @Autowired
+    private CustomerAssertions customerAssertions;
 
     @Override
     public List<Customer> findAllCustomers() {
@@ -82,8 +79,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer createCustomer(Customer customer) {
-        throwIfEmailInvalid(customer.getEmail());
-        throwIfPhoneNumberInvalid(customer.getPhoneNumber());
+        customerAssertions.throwIfEmailInvalid(customer.getEmail());
+        customerAssertions.throwIfPhoneNumberInvalid(customer.getPhoneNumber());
         throwIfEmailAlreadyRegistered(customer.getEmail());
         throwIfPhoneNumberAlreadyRegistered(customer.getPhoneNumber());
         throwIfSocialSecurityNumberAlreadyRegistered(customer.getSocialSecurityNumber());
@@ -95,11 +92,11 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer updateCustomer(Customer customer, String socialSecurityNumber) {
         Customer customerToUpdate = getCustomerBySocialSecurityNumber(socialSecurityNumber);
         if (!Objects.equals(customerToUpdate.getEmail(), customer.getEmail())) {
-            throwIfEmailInvalid(customer.getEmail());
+            customerAssertions.throwIfEmailInvalid(customer.getEmail());
             throwIfEmailAlreadyRegistered(customer.getEmail());
         }
         if (!Objects.equals(customerToUpdate.getPhoneNumber(), customer.getPhoneNumber())) {
-            throwIfPhoneNumberInvalid(customer.getPhoneNumber());
+            customerAssertions.throwIfPhoneNumberInvalid(customer.getPhoneNumber());
             throwIfPhoneNumberAlreadyRegistered(customer.getPhoneNumber());
         }
 
@@ -129,20 +126,6 @@ public class CustomerServiceImpl implements CustomerService {
         logger.info("{} has registered as a customer: {}", username, customer);
 
         return customerFoundByUsername.get();
-    }
-
-    private void throwIfEmailInvalid(String email) {
-        if (!EmailUtil.isValidEmailAddress(email)) {
-            logger.error("Customer email {} is invalid", email);
-            throw new CustomerInvalidEmailException(CustomerErrorMessage.CUSTOMER_INVALID_EMAIL.getMessage());
-        }
-    }
-
-    private void throwIfPhoneNumberInvalid(String phoneNumber) {
-        if (!PhoneNumberUtil.isValid(phoneNumber)) {
-            logger.error("Customer phone number {} is invalid", phoneNumber);
-            throw new CustomerInvalidPhoneNumberException(CustomerErrorMessage.CUSTOMER_INVALID_PHONE_NUMBER.getMessage());
-        }
     }
 
     private void throwIfEmailAlreadyRegistered(String email) {
