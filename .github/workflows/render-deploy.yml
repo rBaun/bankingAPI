@@ -14,3 +14,9 @@ services:
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
+      - key: SPRING_DATASOURCE_URL
+        value: jdbc:sqlserver://rbaun.database.windows.net:1433;database=banking_db
+      - key: SPRING_DATASOURCE_USERNAME
+        value: visitor@rbaun
+      - key: SPRING_DATASOURCE_PASSWORD
+        value: banking123!
