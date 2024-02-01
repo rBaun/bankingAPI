@@ -1,10 +1,11 @@
-package com.rbaun.banking.service.customer;
+package com.rbaun.banking.customer;
 
 import com.rbaun.banking.assertion.customer.CustomerAssertions;
 import com.rbaun.banking.controller.customer.request.LookupCustomerRequest;
 import com.rbaun.banking.exception.customer.CustomerNotFoundException;
 import com.rbaun.banking.model.customer.Customer;
 import com.rbaun.banking.repository.customer.CustomerRepository;
+import com.rbaun.banking.service.customer.CustomerServiceImpl;
 import com.rbaun.banking.service.customer.strategy.LookupCustomerStrategy;
 import com.rbaun.banking.service.customer.strategy.LookupCustomerStrategyFactory;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,4 +1,4 @@
-package com.rbaun.banking.service.account;
+package com.rbaun.banking.account;
 
 import com.rbaun.banking.assertion.account.AccountAssertions;
 import com.rbaun.banking.exception.account.AmountInvalidException;
@@ -7,6 +7,7 @@ import com.rbaun.banking.model.account.Account;
 import com.rbaun.banking.model.enums.AccountType;
 import com.rbaun.banking.model.enums.TransactionType;
 import com.rbaun.banking.repository.account.AccountRepository;
+import com.rbaun.banking.service.account.AccountTransactionComponent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

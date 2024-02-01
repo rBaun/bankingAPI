@@ -1,4 +1,4 @@
-package com.rbaun.banking.service.account;
+package com.rbaun.banking.account;
 
 import com.rbaun.banking.exception.account.AccountNotFoundException;
 import com.rbaun.banking.exception.account.DuplicateAccountException;
@@ -7,6 +7,8 @@ import com.rbaun.banking.model.account.Transaction;
 import com.rbaun.banking.model.customer.Customer;
 import com.rbaun.banking.model.enums.AccountType;
 import com.rbaun.banking.repository.account.AccountRepository;
+import com.rbaun.banking.service.account.AccountServiceImpl;
+import com.rbaun.banking.service.account.AccountTransactionComponent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

@@ -1,4 +1,4 @@
-package com.rbaun.banking.service.account;
+package com.rbaun.banking.account;
 
 import com.rbaun.banking.assertion.account.AccountAssertions;
 import com.rbaun.banking.exception.account.AccountNotFoundException;
@@ -27,34 +27,34 @@ public class AccountAssertionsTest {
     }
 
     @Test
-    public void transferFunds_CustomerDoesNotOwnAccount_ThrowsAccountNotFoundException() {
+    public void accountTransaction_CustomerDoesNotOwnAccount_ThrowsAccountNotFoundException() {
         assertThrows(AccountNotFoundException.class, () -> accountAssertions.throwIfSignedInCustomerDoesNotOwnAccount("123", customer));
     }
 
     @Test
-    public void transferFunds_CustomerOwnsAccount_NoExceptionThrown() {
+    public void accountTransaction_CustomerDoesNotOwnAccount_NoExceptionThrown() {
         customer.addAccount(new Account("title", "123", AccountType.CREDIT, 0));
         assertDoesNotThrow(() -> accountAssertions.throwIfSignedInCustomerDoesNotOwnAccount("123", customer));
     }
 
     @Test
-    public void transferFunds_AmountIsBelowMinimum_ThrowsAmountInvalidException() {
+    public void accountTransaction_AmountIsBelowMinimum_ThrowsAmountInvalidException() {
         assertThrows(AmountInvalidException.class, () -> accountAssertions.throwIfAmountIsBelowMinimum(0));
     }
 
     @Test
-    public void transferFunds_AmountIsAboveMinimum_NoExceptionThrown() {
+    public void accountTransaction_AmountIsAboveMinimum_NoExceptionThrown() {
         assertDoesNotThrow(() -> accountAssertions.throwIfAmountIsBelowMinimum(1));
     }
 
     @Test
-    public void transferFunds_AccountHasInsufficientFunds_ThrowsInsufficientFundsException() {
+    public void accountTransaction_AccountHasInsufficientFunds_ThrowsInsufficientFundsException() {
         account.setBalance(0);
         assertThrows(InsufficientFundsException.class, () -> accountAssertions.throwIfAccountHasInsufficientFunds(1, account));
     }
 
     @Test
-    public void transferFunds_AccountHasSufficientFunds_NoExceptionThrown() {
+    public void accountTransaction_AccountHasSufficientFunds_NoExceptionThrown() {
         account.setBalance(100);
         assertDoesNotThrow(() -> accountAssertions.throwIfAccountHasInsufficientFunds(1, account));
     }

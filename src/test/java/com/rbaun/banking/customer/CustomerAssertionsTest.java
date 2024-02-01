@@ -1,4 +1,4 @@
-package com.rbaun.banking.service.customer;
+package com.rbaun.banking.customer;
 
 import com.rbaun.banking.assertion.customer.CustomerAssertions;
 import com.rbaun.banking.exception.customer.CustomerInvalidEmailException;
