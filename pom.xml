@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.rbaun</groupId>
     <artifactId>banking</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>banking</name>
     <description>Exposing REST based API that can perform banking operations</description>
     <properties>
