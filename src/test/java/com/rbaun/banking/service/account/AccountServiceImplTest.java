@@ -231,6 +231,43 @@ public class AccountServiceImplTest {
     }
 
     @Test
+    public void transfer_ValidAccounts_TransfersMoneyFromOneAccountToAnother() {
+        // Setup accounts
+        String accountNumber1 = "123";
+        String accountNumber2 = "456";
+        double initialBalance1 = 100.0;
+        double initialBalance2 = 0.0;
+        double amount = 50.0;
+        Account account1 = new Account("title", accountNumber1, AccountType.CREDIT, initialBalance1);
+        Account account2 = new Account("title2", accountNumber2, AccountType.CREDIT, initialBalance2);
+
+        // Mock the behavior of accountRepository
+        when(accountRepository.findByAccountNumber(accountNumber1)).thenReturn(java.util.Optional.of(account1));
+        when(accountRepository.findByAccountNumber(accountNumber2)).thenReturn(java.util.Optional.of(account2));
+
+        // Mock the behavior of accountTransactionComponent and accountRepository
+        when(accountTransactionComponent.transfer(account1, account2, amount)).thenAnswer(invocation -> {
+            Account argAccount1 = invocation.getArgument(0);
+            Account argAccount2 = invocation.getArgument(1);
+            double argAmount = invocation.getArgument(2);
+            argAccount1.setBalance(argAccount1.getBalance() - argAmount);
+            argAccount2.setBalance(argAccount2.getBalance() + argAmount);
+            return argAccount1;
+        });
+        when(accountRepository.save(account1)).thenReturn(account1);
+        when(accountRepository.save(account2)).thenReturn(account2);
+
+        // Transfer the amount from account1 to account2
+        Account fromAccount = accountService.transfer(accountNumber1, accountNumber2, amount);
+
+        // Verify that the balance of account1 has decreased by the amount
+        assertEquals(initialBalance1 - amount, fromAccount.getBalance());
+
+        // Verify that the balance of account2 has increased by the amount
+        assertEquals(initialBalance2 + amount, account2.getBalance());
+    }
+
+    @Test
     public void getAccountTransactionHistory_AccountExist_ReturnsTransactionHistory() {
         // Setup account
         String accountNumber = "123";

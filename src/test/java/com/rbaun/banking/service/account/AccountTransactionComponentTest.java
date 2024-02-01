@@ -1,5 +1,6 @@
 package com.rbaun.banking.service.account;
 
+import com.rbaun.banking.assertion.account.AccountAssertions;
 import com.rbaun.banking.exception.account.AmountInvalidException;
 import com.rbaun.banking.exception.account.InsufficientFundsException;
 import com.rbaun.banking.model.account.Account;
@@ -20,6 +21,9 @@ public class AccountTransactionComponentTest {
 
     @Mock
     private AccountRepository accountRepository;
+
+    @Mock
+    private AccountAssertions accountAssertions;
 
     @InjectMocks
     private AccountTransactionComponent accountTransactionComponent;
@@ -76,6 +80,9 @@ public class AccountTransactionComponentTest {
         double amount = -100.0;
         Account account = new Account("title", "123", AccountType.CREDIT, initialBalance);
 
+        // Mock AccountAssertions behavior
+        doThrow(new AmountInvalidException("Amount is invalid")).when(accountAssertions).throwIfAmountIsBelowMinimum(amount);
+
         // Attempt to deposit the amount to the account and expect an exception
         assertThrows(AmountInvalidException.class, () -> accountTransactionComponent.deposit(account, amount));
     }
@@ -125,6 +132,9 @@ public class AccountTransactionComponentTest {
         double amount = -50.0;
         Account account = new Account("title", "123", AccountType.CREDIT, initialBalance);
 
+        // Mock AccountAssertions behavior
+        doThrow(new AmountInvalidException("Amount is invalid")).when(accountAssertions).throwIfAmountIsBelowMinimum(amount);
+
         // Attempt to withdraw the amount from the account and expect an exception
         assertThrows(AmountInvalidException.class, () -> accountTransactionComponent.withdraw(account, amount));
     }
@@ -136,7 +146,44 @@ public class AccountTransactionComponentTest {
         double amount = 200.0;
         Account account = new Account("title", "123", AccountType.CREDIT, initialBalance);
 
+        // Mock AccountAssertions behavior
+        doThrow(new InsufficientFundsException("Insufficient funds")).when(accountAssertions).throwIfAccountHasInsufficientFunds(amount, account);
+
         // Attempt to withdraw the amount from the account and expect an exception
         assertThrows(InsufficientFundsException.class, () -> accountTransactionComponent.withdraw(account, amount));
+    }
+
+    @Test
+    public void transfer_ValidAmount_DecreasesFromAccountBalance() {
+        // Setup accounts
+        double initialBalance = 100.0;
+        double amount = 50.0;
+        Account fromAccount = new Account("title", "123", AccountType.CREDIT, initialBalance);
+        Account toAccount = new Account("title", "123", AccountType.CREDIT, initialBalance);
+
+        // Transfer the amount from the fromAccount to the toAccount
+        when(accountRepository.save(fromAccount)).thenReturn(fromAccount);
+        Account fromAccountAfterTransfer = accountTransactionComponent.transfer(fromAccount, toAccount, amount);
+
+        // Verify that the balance has decreased by the amount
+        assertEquals(initialBalance - amount, fromAccountAfterTransfer.getBalance());
+        verify(accountRepository, times(1)).save(fromAccount);
+    }
+
+    @Test
+    public void transfer_ValidAmount_IncreasesToAccountBalance() {
+        // Setup accounts
+        double initialBalance = 100.0;
+        double amount = 50.0;
+        Account fromAccount = new Account("title", "123", AccountType.CREDIT, initialBalance);
+        Account toAccount = new Account("title", "123", AccountType.CREDIT, initialBalance);
+
+        // Transfer the amount from the fromAccount to the toAccount
+        when(accountRepository.save(fromAccount)).thenReturn(fromAccount);
+        Account fromAccountAfterTransfer = accountTransactionComponent.transfer(fromAccount, toAccount, amount);
+
+        // Verify that the balance has increased by the amount
+        assertEquals(initialBalance + amount, toAccount.getBalance());
+        verify(accountRepository, times(1)).save(fromAccount);
     }
 }

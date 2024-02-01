@@ -1,5 +1,6 @@
 package com.rbaun.banking.service.customer;
 
+import com.rbaun.banking.assertion.customer.CustomerAssertions;
 import com.rbaun.banking.controller.customer.request.LookupCustomerRequest;
 import com.rbaun.banking.exception.customer.CustomerNotFoundException;
 import com.rbaun.banking.model.customer.Customer;
@@ -25,6 +26,9 @@ public class CustomerServiceImplTest {
 
     @Mock
     private CustomerRepository customerRepository;
+
+    @Mock
+    private CustomerAssertions customerAssertions;
 
     @InjectMocks
     private CustomerServiceImpl customerService;
@@ -218,6 +222,9 @@ public class CustomerServiceImplTest {
         // Setup
         Customer customer = new Customer("John", "john@gmail.com", "1234567890", "Address 1", null, "123");
         when(customerRepository.save(customer)).thenReturn(customer);
+        // Mock the CustomerAssertions behavior
+        doNothing().when(customerAssertions).throwIfEmailInvalid(customer.getEmail());
+        doNothing().when(customerAssertions).throwIfPhoneNumberInvalid(customer.getPhoneNumber());
 
         // Execute
         Customer result = customerService.createCustomer(customer);
@@ -234,6 +241,8 @@ public class CustomerServiceImplTest {
         Customer updatedCustomer = new Customer("Jane", "jane@gmail.com", "0987654321", "Address 2", null, socialSecurityNumber);
         when(customerRepository.findBySocialSecurityNumber(socialSecurityNumber)).thenReturn(Optional.of(existingCustomer));
         when(customerRepository.save(any(Customer.class))).thenReturn(updatedCustomer);
+        doNothing().when(customerAssertions).throwIfEmailInvalid(updatedCustomer.getEmail());
+        doNothing().when(customerAssertions).throwIfPhoneNumberInvalid(updatedCustomer.getPhoneNumber());
 
         // Execute
         Customer result = customerService.updateCustomer(updatedCustomer, socialSecurityNumber);
