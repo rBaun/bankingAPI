@@ -40,9 +40,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(getAuthorizationManagerRequestMatcherRegistryCustomizer())
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(getSessionManagementConfigurerCustomizer())
                 .authenticationProvider(authenticationProvider())
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
@@ -54,8 +54,9 @@ public class SecurityConfig {
     private Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> getAuthorizationManagerRequestMatcherRegistryCustomizer() {
         return auth -> auth
                 .requestMatchers(
-                        req -> req.getRequestURI().equals("/api/auth/login") ||
-                                req.getRequestURI().equals("/api/auth/register")
+                        req -> req.getRequestURI().startsWith("/api/auth") ||
+                                req.getRequestURI().startsWith("/api/swagger-ui") ||
+                                req.getRequestURI().contains("api-docs")
                 ).permitAll()
                 .requestMatchers(
                         req -> req.getRequestURI().startsWith("/api/v1")
@@ -73,7 +74,6 @@ public class SecurityConfig {
         authenticationProvider.setUserDetailsService(userDetailsService());
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
-
     }
 
     @Bean
