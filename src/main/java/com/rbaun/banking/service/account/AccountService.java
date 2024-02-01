@@ -74,6 +74,18 @@ public interface AccountService {
     Account withdraw(String accountNumber, double amount);
 
     /**
+     * Transfer money from one account to another
+     * @param fromAccountNumber the account number to transfer money from
+     * @param toAccountNumber the account number to transfer money to
+     * @param amount the amount to transfer
+     * @return the account with the updated balance
+     * @throws AccountNotFoundException if the account is not found
+     * @throws AmountInvalidException if the amount is less than or equal to 0
+     * @throws InsufficientFundsException if the account has insufficient funds
+     */
+    Account transfer(String fromAccountNumber, String toAccountNumber, double amount);
+
+    /**
      * Get the transaction history for an account
      * @param accountNumber the account number to get the transaction history for
      * @return the transaction history for the account

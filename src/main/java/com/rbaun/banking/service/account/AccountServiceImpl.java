@@ -89,6 +89,14 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public Account transfer(String fromAccountNumber, String toAccountNumber, double amount) {
+        Account fromAccount = getAccountByAccountNumber(fromAccountNumber);
+        Account toAccount = getAccountByAccountNumber(toAccountNumber);
+
+        return accountTransactionComponent.transfer(fromAccount, toAccount, amount);
+    }
+
+    @Override
     public List<Transaction> getAccountTransactionHistory(String accountNumber) {
         Account account = getAccountByAccountNumber(accountNumber);
 

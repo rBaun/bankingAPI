@@ -152,4 +152,8 @@ public class Customer extends BaseEntity {
                 ", accounts=" + accounts +
                 '}';
     }
+
+    public boolean hasAccount(String accountNumber) {
+        return accounts.stream().anyMatch(account -> account.getAccountNumber().equals(accountNumber));
+    }
 }

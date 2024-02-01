@@ -1,6 +1,6 @@
 package com.rbaun.banking.service.account;
 
-import com.rbaun.banking.exception.account.AccountErrorMessage;
+import com.rbaun.banking.assertion.account.AccountAssertions;
 import com.rbaun.banking.exception.account.AmountInvalidException;
 import com.rbaun.banking.exception.account.InsufficientFundsException;
 import com.rbaun.banking.model.account.Account;
@@ -22,6 +22,8 @@ public class AccountTransactionComponent {
     private static final Logger logger = LoggerFactory.getLogger(AccountTransactionComponent.class);
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private AccountAssertions accountAssertions;
 
     /**
      * Deposit money into an account
@@ -32,7 +34,7 @@ public class AccountTransactionComponent {
      */
     @Transactional
     public Account deposit(Account account, double amount) {
-        throwIfAmountIsNegative(amount);
+        accountAssertions.throwIfAmountIsBelowMinimum(amount);
         account.deposit(amount);
         addTransactionToAccount(amount, TransactionType.DEPOSIT, account);
 
@@ -49,12 +51,29 @@ public class AccountTransactionComponent {
      */
     @Transactional
     public Account withdraw(Account account, double amount) {
-        throwIfAmountIsNegative(amount);
-        throwIfAccountHasInsufficientFunds(amount, account);
+        accountAssertions.throwIfAmountIsBelowMinimum(amount);
+        accountAssertions.throwIfAccountHasInsufficientFunds(amount, account);
         account.withdraw(amount);
         addTransactionToAccount(amount, TransactionType.WITHDRAWAL, account);
 
         return accountRepository.save(account);
+    }
+
+    /**
+     * Transfer money from one account to another
+     * @param fromAccount the account to transfer money from
+     * @param toAccount the account to transfer money to
+     * @param amount the amount to transfer
+     * @return the account to transfer from with the updated balance
+     * @throws AmountInvalidException if the amount is less than or equal to 0
+     * @throws InsufficientFundsException if the account has insufficient funds
+     */
+    @Transactional
+    public Account transfer(Account fromAccount, Account toAccount, double amount) {
+        fromAccount = withdraw(fromAccount, amount);
+        deposit(toAccount, amount);
+
+        return fromAccount;
     }
 
     private void addTransactionToAccount(double amount, TransactionType transactionType, Account account) {
@@ -62,21 +81,4 @@ public class AccountTransactionComponent {
         account.addTransaction(transaction);
         logger.info("Added transaction: {} to account: {}", transaction, account);
     }
-
-    private void throwIfAmountIsNegative(double amount) {
-        boolean amountIsBelowMinimum = amount <= 0;
-        if (amountIsBelowMinimum) {
-            logger.error("Amount: {} is below the minimum allowed transaction amount", amount);
-            throw new AmountInvalidException(AccountErrorMessage.AMOUNT_BELOW_MINIMUM.getMessage());
-        }
-    }
-
-    private void throwIfAccountHasInsufficientFunds(double amount, Account account) {
-        boolean accountHasSufficientFunds = account.getBalance() >= amount;
-        if (!accountHasSufficientFunds) {
-            logger.error("Account: {} has insufficient funds", account);
-            throw new InsufficientFundsException(AccountErrorMessage.INSUFFICIENT_FUNDS.getMessage());
-        }
-    }
-
 }

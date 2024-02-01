@@ -2,6 +2,9 @@ package com.rbaun.banking.controller.account;
 
 import com.rbaun.banking.controller.BaseControllerAPI;
 import com.rbaun.banking.controller.account.request.CreateAccountRequest;
+import com.rbaun.banking.controller.account.request.DepositRequest;
+import com.rbaun.banking.controller.account.request.TransferRequest;
+import com.rbaun.banking.controller.account.request.WithdrawRequest;
 import com.rbaun.banking.controller.account.response.AccountBalanceResponse;
 import com.rbaun.banking.controller.account.response.AccountResponse;
 import com.rbaun.banking.controller.account.response.DeleteAccountResponse;
@@ -36,8 +39,9 @@ public interface AccountControllerAPI extends BaseControllerAPI {
      */
     String BASE_ACCOUNT_NUMBER_URL = "/accountNumber";
     String GET_ACCOUNT_BY_ACCOUNT_NUMBER_URL = BASE_ACCOUNT_NUMBER_URL + "/{accountNumber}";
-    String DEPOSIT_URL = BASE_ACCOUNT_NUMBER_URL + "/{accountNumber}/deposit/{amount}";
-    String WITHDRAW_URL = BASE_ACCOUNT_NUMBER_URL + "/{accountNumber}/withdraw/{amount}";
+    String DEPOSIT_URL = BASE_ACCOUNT_NUMBER_URL + "/deposit";
+    String WITHDRAW_URL = BASE_ACCOUNT_NUMBER_URL + "/withdraw";
+    String TRANSFER_URL = BASE_ACCOUNT_NUMBER_URL + "/transfer";
 
     /**
      * Transaction operations
@@ -170,8 +174,7 @@ public interface AccountControllerAPI extends BaseControllerAPI {
 
     /**
      * Request to deposit money into an account
-     * @param accountNumber - the account number to deposit money into
-     * @param amount - the amount to deposit
+     * @param request - Contains the account number to deposit money into and the amount to deposit
      * @return @{@link ResponseEntity} with an @{@link AccountBalanceResponse}
      */
     @Operation(
@@ -195,12 +198,11 @@ public interface AccountControllerAPI extends BaseControllerAPI {
             }
     )
     @PutMapping(DEPOSIT_URL)
-    ResponseEntity<AccountBalanceResponse> deposit(@PathVariable String accountNumber, @PathVariable double amount);
+    ResponseEntity<AccountBalanceResponse> deposit(@RequestBody DepositRequest request);
 
     /**
      * Request to withdraw money from an account
-     * @param accountNumber - the account number to withdraw money from
-     * @param amount - the amount to withdraw
+     * @param request - Contains the account number to withdraw money from and the amount to withdraw
      * @return @{@link ResponseEntity} with an @{@link AccountBalanceResponse}
      */
     @Operation(
@@ -224,7 +226,10 @@ public interface AccountControllerAPI extends BaseControllerAPI {
             }
     )
     @PutMapping(WITHDRAW_URL)
-    ResponseEntity<AccountBalanceResponse> withdraw(@PathVariable String accountNumber, @PathVariable double amount);
+    ResponseEntity<AccountBalanceResponse> withdraw(@RequestBody WithdrawRequest request);
+
+    @PostMapping(TRANSFER_URL)
+    ResponseEntity<AccountBalanceResponse> transfer(@RequestBody TransferRequest request);
 
     /**
      * Request to get all transactions for an account

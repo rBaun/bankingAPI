@@ -1,7 +1,11 @@
 package com.rbaun.banking.controller.account;
 
+import com.rbaun.banking.assertion.account.AccountAssertions;
 import com.rbaun.banking.controller.BaseController;
 import com.rbaun.banking.controller.account.request.CreateAccountRequest;
+import com.rbaun.banking.controller.account.request.DepositRequest;
+import com.rbaun.banking.controller.account.request.TransferRequest;
+import com.rbaun.banking.controller.account.request.WithdrawRequest;
 import com.rbaun.banking.controller.account.response.AccountBalanceResponse;
 import com.rbaun.banking.controller.account.response.AccountResponse;
 import com.rbaun.banking.controller.account.response.DeleteAccountResponse;
@@ -25,6 +29,8 @@ public class AccountController extends BaseController implements AccountControll
     private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private AccountAssertions accountAssertions;
 
     @Operation(summary = "Get a list of all accounts", responses = {
             @ApiResponse(
@@ -67,19 +73,29 @@ public class AccountController extends BaseController implements AccountControll
     }
 
     @Override
-    public ResponseEntity<AccountBalanceResponse> deposit(String accountNumber, double amount) {
-        logger.info("{} requested to deposit {} into account with account number: {}", getLoggedInUsername(), amount, accountNumber);
-        Account account = accountService.deposit(accountNumber, amount);
-        logger.info("Deposited {} into account: {}", amount, account);
+    public ResponseEntity<AccountBalanceResponse> deposit(DepositRequest request) {
+        logger.info("{} requested to deposit {} into account with account number: {}", getLoggedInUsername(), request.amount(), request.accountNumber());
+        accountAssertions.throwIfSignedInCustomerDoesNotOwnAccount(request.accountNumber(), getLoggedInCustomer());
+        Account account = accountService.deposit(request.accountNumber(), request.amount());
+        logger.info("Deposited {} into account: {}", request.amount(), account);
 
         return ResponseEntity.ok(AccountBalanceResponse.from(account));
     }
 
     @Override
-    public ResponseEntity<AccountBalanceResponse> withdraw(String accountNumber, double amount) {
-        logger.info("{} requested to withdraw {} from account with account number: {}", getLoggedInUsername(), amount, accountNumber);
-        Account account = accountService.withdraw(accountNumber, amount);
-        logger.info("Withdrew {} from account: {}", amount, account);
+    public ResponseEntity<AccountBalanceResponse> withdraw(WithdrawRequest request) {
+        logger.info("{} requested to withdraw {} from account with account number: {}", getLoggedInUsername(), request.amount(), request.accountNumber());
+        Account account = accountService.withdraw(request.accountNumber(), request.amount());
+        logger.info("Withdrew {} from account: {}", request.amount(), account);
+
+        return ResponseEntity.ok(AccountBalanceResponse.from(account));
+    }
+
+    @Override
+    public ResponseEntity<AccountBalanceResponse> transfer(TransferRequest request) {
+        logger.info("{} requested to transfer {} from account with account number: {} to account with account number: {}", getLoggedInUsername(), request.amount(), request.fromAccountNumber(), request.toAccountNumber());
+        Account account = accountService.transfer(request.fromAccountNumber(), request.toAccountNumber(), request.amount());
+        logger.info("Transferred {} from account: {} to account: {}", request.amount(), request.fromAccountNumber(), request.toAccountNumber());
 
         return ResponseEntity.ok(AccountBalanceResponse.from(account));
     }
