@@ -1,0 +1,16 @@
+name: Deploy to Render
+
+on:
+  push:
+    branches:
+      - master
+
+services:
+  - type: web
+    name: bankingAPI
+    env: docker
+    buildCommand: docker build -t bankingAPI .
+    startCommand: docker run -p 10000:8080 bankingAPI
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
