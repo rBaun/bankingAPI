@@ -1,16 +1,12 @@
+version: '3.8'
 services:
-  rabbitmq:
-    image: 'rabbitmq:latest'
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
     environment:
-      - 'RABBITMQ_DEFAULT_PASS=secret'
-      - 'RABBITMQ_DEFAULT_USER=myuser'
+      - SPRING_DATASOURCE_URL=jdbc:sqlserver://rbaun.database.windows.net:1433;database=banking_db
+      - SPRING_DATASOURCE_USERNAME=visitor@rbaun
+      - SPRING_DATASOURCE_PASSWORD=banking123!
     ports:
-      - '5672'
-  sqlserver:
-    image: 'mcr.microsoft.com/mssql/server:latest'
-    environment:
-      - 'ACCEPT_EULA=yes'
-      - 'MSSQL_PID=express'
-      - 'MSSQL_SA_PASSWORD=verYs3cret'
-    ports:
-      - '1433'
+      - 8080:8080
