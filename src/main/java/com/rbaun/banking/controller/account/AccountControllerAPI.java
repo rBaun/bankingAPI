@@ -228,6 +228,31 @@ public interface AccountControllerAPI extends BaseControllerAPI {
     @PutMapping(WITHDRAW_URL)
     ResponseEntity<AccountBalanceResponse> withdraw(@RequestBody WithdrawRequest request);
 
+    /**
+     * Request to transfer money from one account to another
+     * @param request - Contains the account number to transfer money from, the account number to transfer money to, and the amount to transfer
+     * @return @{@link ResponseEntity} with an @{@link AccountBalanceResponse} for the account the money was transferred from
+     */
+    @Operation(
+            summary = "Transfer money from one account to another",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Account found",
+                            content = @Content(
+                                    mediaType = "application/json"
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Account not found"
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Invalid amount or insufficient funds"
+                    )
+            }
+    )
     @PostMapping(TRANSFER_URL)
     ResponseEntity<AccountBalanceResponse> transfer(@RequestBody TransferRequest request);
 
