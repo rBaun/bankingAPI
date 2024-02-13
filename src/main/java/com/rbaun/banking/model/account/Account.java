@@ -17,8 +17,9 @@ public class Account extends BaseEntity {
 
     @Column(nullable = false)
     private String title;
-    @Column(unique = true)
+    @Column(name = "account_number", unique = true)
     private String accountNumber;
+    @Column(name = "account_type", nullable = false)
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
     @Column(nullable = false)

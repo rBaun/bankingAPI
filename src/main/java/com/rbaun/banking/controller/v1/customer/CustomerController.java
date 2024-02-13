@@ -45,7 +45,7 @@ public class CustomerController extends BaseController implements CustomerContro
     @Override
     public ResponseEntity<CustomerResponse> createCustomer(CreateCustomerRequest request) {
         logger.info("{} requested to create customer: {}", getLoggedInUsername(), request);
-        Customer customer = customerService.createCustomer(new Customer(request));
+        Customer customer = customerService.createCustomer(new Customer(request, getLoggedInUsername()));
         logger.info("Created customer: {}", customer);
 
         return ResponseEntity.ok(CustomerResponse.from(customer));
