@@ -1,7 +1,7 @@
 package com.rbaun.banking.controller.v1.auth;
 
-import com.rbaun.banking.auth.AuthRequest;
-import com.rbaun.banking.auth.JwtResponse;
+import com.rbaun.banking.controller.v1.auth.request.AuthRequest;
+import com.rbaun.banking.controller.v1.auth.response.JwtResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.PostMapping;
