@@ -24,7 +24,7 @@ public interface CustomerControllerAPI extends BaseControllerAPI {
     String GET_ALL_CUSTOMERS_URL = "/all";
     String GET_CUSTOMERS_BY_SEARCH_TERM_URL = "/{searchTerm}";
     String CREATE_CUSTOMER_URL = "/create";
-    String DELETE_CUSTOMER_URL = "/delete/{id}";
+    String DELETE_CUSTOMER_URL = "/delete";
     String UPDATE_CUSTOMER_URL = "/update/{id}";
 
     /**
@@ -108,7 +108,7 @@ public interface CustomerControllerAPI extends BaseControllerAPI {
      * @return @{@link ResponseEntity} with a @{@link DeleteCustomerResponse} containing the id of the deleted customer
      */
     @Operation(
-            summary = "Delete a customer by id",
+            summary = "Delete a customer by email, phone number or social security number",
             responses = {
                     @ApiResponse(
                             responseCode = "200",

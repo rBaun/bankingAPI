@@ -1,3 +1,10 @@
+DROP TABLE IF EXISTS transactions;
+DROP TABLE IF EXISTS accounts;
+DROP TABLE IF EXISTS customers;
+DROP TABLE IF EXISTS user_roles;
+DROP TABLE IF EXISTS roles;
+DROP TABLE IF EXISTS users;
+
 -- Authentication Tables
 CREATE TABLE users (
     id INT IDENTITY(1,1) PRIMARY KEY,
@@ -40,6 +47,7 @@ CREATE TABLE accounts (
     id BIGINT IDENTITY PRIMARY KEY,
     created DATETIME NOT NULL,
     updated DATETIME,
+    title NVARCHAR(255),
     account_number NVARCHAR(255) NOT NULL UNIQUE,
     account_type NVARCHAR(255) NOT NULL,
     balance DECIMAL(19, 4) NOT NULL,
