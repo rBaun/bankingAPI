@@ -5,18 +5,13 @@ on:
     branches:
       - master
 
-services:
-  - type: web
-    name: bankingAPI
-    env: docker
-    buildCommand: docker build -t bankingAPI .
-    startCommand: docker run -p 10000:8080 bankingAPI
-    envVars:
-      - key: SPRING_PROFILES_ACTIVE
-        value: prod
-      - key: SPRING_DATASOURCE_URL
-        value: jdbc:sqlserver://rbaun.database.windows.net:1433;database=banking_db
-      - key: SPRING_DATASOURCE_USERNAME
-        value: visitor@rbaun
-      - key: SPRING_DATASOURCE_PASSWORD
-        value: banking123!
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Trigger Render Deployment
+        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
