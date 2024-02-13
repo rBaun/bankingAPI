@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * Handle exceptions thrown by the endpoints in the @{@link com.rbaun.banking.controller.account.AccountController}
+ * Handle exceptions thrown by the endpoints in the @{@link com.rbaun.banking.controller.v1.account.AccountController}
  */
 @ControllerAdvice
 public class AccountExceptionHandler {

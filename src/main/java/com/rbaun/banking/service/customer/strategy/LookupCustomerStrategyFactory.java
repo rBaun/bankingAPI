@@ -1,6 +1,6 @@
 package com.rbaun.banking.service.customer.strategy;
 
-import com.rbaun.banking.controller.customer.request.LookupCustomerRequest;
+import com.rbaun.banking.controller.v1.customer.request.LookupCustomerRequest;
 
 public class LookupCustomerStrategyFactory {
 

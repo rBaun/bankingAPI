@@ -56,7 +56,9 @@ public class SecurityConfig {
                 .requestMatchers(
                         req -> req.getRequestURI().startsWith("/api/auth") ||
                                 req.getRequestURI().startsWith("/api/swagger-ui") ||
-                                req.getRequestURI().contains("api-docs")
+                                req.getRequestURI().contains("api-docs") ||
+                                req.getRequestURI().contains("swagger-resources") ||
+                                req.getRequestURI().contains("swagger-ui.html")
                 ).permitAll()
                 .requestMatchers(
                         req -> req.getRequestURI().startsWith("/api/v1")

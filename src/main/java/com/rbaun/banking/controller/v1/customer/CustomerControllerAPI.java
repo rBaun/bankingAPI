@@ -1,11 +1,11 @@
-package com.rbaun.banking.controller.customer;
+package com.rbaun.banking.controller.v1.customer;
 
-import com.rbaun.banking.controller.BaseControllerAPI;
-import com.rbaun.banking.controller.customer.request.CreateCustomerRequest;
-import com.rbaun.banking.controller.customer.request.LookupCustomerRequest;
-import com.rbaun.banking.controller.customer.request.UpdateCustomerRequest;
-import com.rbaun.banking.controller.customer.response.CustomerResponse;
-import com.rbaun.banking.controller.customer.response.DeleteCustomerResponse;
+import com.rbaun.banking.controller.v1.BaseControllerAPI;
+import com.rbaun.banking.controller.v1.customer.request.CreateCustomerRequest;
+import com.rbaun.banking.controller.v1.customer.request.LookupCustomerRequest;
+import com.rbaun.banking.controller.v1.customer.request.UpdateCustomerRequest;
+import com.rbaun.banking.controller.v1.customer.response.CustomerResponse;
+import com.rbaun.banking.controller.v1.customer.response.DeleteCustomerResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -24,7 +24,7 @@ public interface CustomerControllerAPI extends BaseControllerAPI {
     String GET_ALL_CUSTOMERS_URL = "/all";
     String GET_CUSTOMERS_BY_SEARCH_TERM_URL = "/{searchTerm}";
     String CREATE_CUSTOMER_URL = "/create";
-    String DELETE_CUSTOMER_URL = "/delete/{id}";
+    String DELETE_CUSTOMER_URL = "/delete";
     String UPDATE_CUSTOMER_URL = "/update/{id}";
 
     /**
@@ -108,7 +108,7 @@ public interface CustomerControllerAPI extends BaseControllerAPI {
      * @return @{@link ResponseEntity} with a @{@link DeleteCustomerResponse} containing the id of the deleted customer
      */
     @Operation(
-            summary = "Delete a customer by id",
+            summary = "Delete a customer by email, phone number or social security number",
             responses = {
                     @ApiResponse(
                             responseCode = "200",

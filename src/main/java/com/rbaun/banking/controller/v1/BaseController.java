@@ -1,4 +1,4 @@
-package com.rbaun.banking.controller;
+package com.rbaun.banking.controller.v1;
 
 import com.rbaun.banking.model.customer.Customer;
 import com.rbaun.banking.service.customer.CustomerService;

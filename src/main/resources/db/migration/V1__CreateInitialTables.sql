@@ -1,3 +1,10 @@
+DROP TABLE IF EXISTS transactions;
+DROP TABLE IF EXISTS accounts;
+DROP TABLE IF EXISTS customers;
+DROP TABLE IF EXISTS user_roles;
+DROP TABLE IF EXISTS roles;
+DROP TABLE IF EXISTS users;
+
 -- Authentication Tables
 CREATE TABLE users (
     id INT IDENTITY(1,1) PRIMARY KEY,
@@ -29,10 +36,10 @@ CREATE TABLE customers (
     updated DATETIME,
     name NVARCHAR(255) NOT NULL,
     email NVARCHAR(255) NOT NULL UNIQUE,
-    phoneNumber NVARCHAR(255) NOT NULL UNIQUE,
+    phone_number NVARCHAR(255) NOT NULL UNIQUE,
     address NVARCHAR(255) NOT NULL,
-    dateOfBirth DATE,
-    socialSecurityNumber NVARCHAR(255) NOT NULL UNIQUE,
+    date_of_birth DATE,
+    social_security_number NVARCHAR(255) NOT NULL UNIQUE,
     username NVARCHAR(255) NOT NULL
 );
 
@@ -40,11 +47,12 @@ CREATE TABLE accounts (
     id BIGINT IDENTITY PRIMARY KEY,
     created DATETIME NOT NULL,
     updated DATETIME,
-    accountNumber NVARCHAR(255) NOT NULL UNIQUE,
-    accountType NVARCHAR(255) NOT NULL,
+    title NVARCHAR(255),
+    account_number NVARCHAR(255) NOT NULL UNIQUE,
+    account_type NVARCHAR(255) NOT NULL,
     balance DECIMAL(19, 4) NOT NULL,
     customer_id BIGINT,
-    FOREIGN KEY (customer_id) REFERENCES Customers(id)
+    FOREIGN KEY (customer_id) REFERENCES customers(id)
 );
 
 CREATE TABLE transactions (
@@ -54,5 +62,5 @@ CREATE TABLE transactions (
     amount FLOAT NOT NULL,
     type NVARCHAR(255) NOT NULL,
     account_id BIGINT NOT NULL,
-    FOREIGN KEY (account_id) REFERENCES Accounts(id)
+    FOREIGN KEY (account_id) REFERENCES accounts(id)
 );

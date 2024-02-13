@@ -1,6 +1,6 @@
 package com.rbaun.banking.model.account;
 
-import com.rbaun.banking.controller.account.request.CreateAccountRequest;
+import com.rbaun.banking.controller.v1.account.request.CreateAccountRequest;
 import com.rbaun.banking.model.BaseEntity;
 import com.rbaun.banking.model.customer.Customer;
 import com.rbaun.banking.model.enums.AccountType;
@@ -17,8 +17,9 @@ public class Account extends BaseEntity {
 
     @Column(nullable = false)
     private String title;
-    @Column(unique = true)
+    @Column(name = "account_number", unique = true)
     private String accountNumber;
+    @Column(name = "account_type", nullable = false)
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
     @Column(nullable = false)

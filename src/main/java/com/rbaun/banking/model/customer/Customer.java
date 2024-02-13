@@ -1,7 +1,7 @@
 package com.rbaun.banking.model.customer;
 
-import com.rbaun.banking.controller.customer.request.CreateCustomerRequest;
-import com.rbaun.banking.controller.customer.request.UpdateCustomerRequest;
+import com.rbaun.banking.controller.v1.customer.request.CreateCustomerRequest;
+import com.rbaun.banking.controller.v1.customer.request.UpdateCustomerRequest;
 import com.rbaun.banking.model.BaseEntity;
 import com.rbaun.banking.model.account.Account;
 import jakarta.persistence.CascadeType;
@@ -23,13 +23,13 @@ public class Customer extends BaseEntity {
     private String name;
     @Column(unique = true, nullable = false)
     private String email;
-    @Column(unique = true, nullable = false)
+    @Column(name = "phone_number", unique = true, nullable = false)
     private String phoneNumber;
     @Column(nullable = false)
     private String address;
-    @Column
+    @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
-    @Column(unique = true, nullable = false)
+    @Column(name = "social_security_number", unique = true, nullable = false)
     private String socialSecurityNumber;
     @Column(nullable = false)
     private String username;
@@ -48,13 +48,14 @@ public class Customer extends BaseEntity {
         this.socialSecurityNumber = socialSecurityNumber;
     }
 
-    public Customer(CreateCustomerRequest request) {
+    public Customer(CreateCustomerRequest request, String username) {
         this.name = request.firstName() + " " + request.lastName();
         this.email = request.email();
         this.phoneNumber = request.phoneNumber();
         this.address = request.address();
         this.dateOfBirth = request.dateOfBirth();
         this.socialSecurityNumber = request.socialSecurityNumber();
+        this.username = username;
     }
 
     public Customer(UpdateCustomerRequest request) {

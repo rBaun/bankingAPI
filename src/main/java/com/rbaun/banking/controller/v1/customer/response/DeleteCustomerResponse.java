@@ -1,6 +1,6 @@
-package com.rbaun.banking.controller.customer.response;
+package com.rbaun.banking.controller.v1.customer.response;
 
-import com.rbaun.banking.controller.customer.request.LookupCustomerRequest;
+import com.rbaun.banking.controller.v1.customer.request.LookupCustomerRequest;
 
 /**
  * Used for when a customer is deleted

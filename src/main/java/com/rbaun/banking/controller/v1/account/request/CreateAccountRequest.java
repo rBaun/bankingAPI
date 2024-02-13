@@ -1,4 +1,4 @@
-package com.rbaun.banking.controller.account.request;
+package com.rbaun.banking.controller.v1.account.request;
 
 import com.rbaun.banking.model.enums.AccountType;
 import jakarta.validation.constraints.NotBlank;

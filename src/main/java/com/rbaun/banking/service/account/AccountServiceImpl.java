@@ -33,10 +33,12 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public Account createAccount(Account account, Customer customer) {
         throwIfAccountNumberAlreadyCreated(account);
-        throwIfCustomerAccountNameAlreadyExist(account);
+        throwIfCustomerAccountNameAlreadyExist(customer.getEmail(), account.getTitle());
         customer.addAccount(account);
+        logger.info("Added account {} to customer {}", account.getAccountNumber(), customer.getUsername());
 
         return accountRepository.save(account);
     }
@@ -64,6 +66,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public void deleteAccountByAccountNumber(String accountNumber) {
         accountRepository.deleteByAccountNumber(accountNumber);
     }
@@ -118,14 +121,15 @@ public class AccountServiceImpl implements AccountService {
 
     /**
      * Make sure that the title of the account is unique to the owner of the account
-     * @param account - the account to check
+     * @param email - the email of the owner of the account
+     * @param title - the title of the account
      * @throws DuplicateAccountException - if the account title already exists for the owner of the account
      */
-    private void throwIfCustomerAccountNameAlreadyExist(Account account) {
-        boolean accountExists = accountRepository.findByCustomer_IdAndTitle(account.getCustomer().getId(), account.getTitle()).isPresent();
+    private void throwIfCustomerAccountNameAlreadyExist(String email, String title) {
+        boolean accountExists = accountRepository.findByCustomer_EmailAndTitle(email, title).isPresent();
         if (accountExists) {
-            logger.error("Account with title {} already exists", account.getTitle());
-            throw new DuplicateAccountException("Account with title " + account.getTitle() + " already exists");
+            logger.error("Account with title {} already exists", title);
+            throw new DuplicateAccountException("Account with title " + title + " already exists");
         }
     }
 }

@@ -1,6 +1,6 @@
 package com.rbaun.banking.validation;
 
-import com.rbaun.banking.controller.customer.request.LookupCustomerRequest;
+import com.rbaun.banking.controller.v1.customer.request.LookupCustomerRequest;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

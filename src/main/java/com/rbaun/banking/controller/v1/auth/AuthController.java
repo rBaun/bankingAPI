@@ -1,5 +1,9 @@
-package com.rbaun.banking.auth;
+package com.rbaun.banking.controller.v1.auth;
 
+import com.rbaun.banking.auth.AuthRequest;
+import com.rbaun.banking.auth.JwtResponse;
+import com.rbaun.banking.auth.JwtUtil;
+import com.rbaun.banking.auth.UserRepository;
 import com.rbaun.banking.model.user.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,15 +1,15 @@
-package com.rbaun.banking.controller.account;
+package com.rbaun.banking.controller.v1.account;
 
 import com.rbaun.banking.assertion.account.AccountAssertions;
-import com.rbaun.banking.controller.BaseController;
-import com.rbaun.banking.controller.account.request.CreateAccountRequest;
-import com.rbaun.banking.controller.account.request.DepositRequest;
-import com.rbaun.banking.controller.account.request.TransferRequest;
-import com.rbaun.banking.controller.account.request.WithdrawRequest;
-import com.rbaun.banking.controller.account.response.AccountBalanceResponse;
-import com.rbaun.banking.controller.account.response.AccountResponse;
-import com.rbaun.banking.controller.account.response.DeleteAccountResponse;
-import com.rbaun.banking.controller.account.response.TransactionResponse;
+import com.rbaun.banking.controller.v1.BaseController;
+import com.rbaun.banking.controller.v1.account.request.CreateAccountRequest;
+import com.rbaun.banking.controller.v1.account.request.DepositRequest;
+import com.rbaun.banking.controller.v1.account.request.TransferRequest;
+import com.rbaun.banking.controller.v1.account.request.WithdrawRequest;
+import com.rbaun.banking.controller.v1.account.response.AccountBalanceResponse;
+import com.rbaun.banking.controller.v1.account.response.AccountResponse;
+import com.rbaun.banking.controller.v1.account.response.DeleteAccountResponse;
+import com.rbaun.banking.controller.v1.account.response.TransactionResponse;
 import com.rbaun.banking.model.account.Account;
 import com.rbaun.banking.service.account.AccountService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -52,15 +52,6 @@ public class AccountController extends BaseController implements AccountControll
         logger.info("Found {} accounts to return", accountList.size());
 
         return accountList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(accountList);
-    }
-
-    @Override
-    public ResponseEntity<AccountResponse> getAccountById(Long id) {
-        logger.info("{} requested to find account with id: {}", getLoggedInUsername(), id);
-        Account account = accountService.getAccountById(id);
-        logger.info("Found account: {}", account);
-
-        return ResponseEntity.ok(AccountResponse.from(account));
     }
 
     @Override
