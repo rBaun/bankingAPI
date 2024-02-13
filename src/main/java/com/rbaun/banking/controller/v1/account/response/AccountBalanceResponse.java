@@ -1,4 +1,4 @@
-package com.rbaun.banking.controller.account.response;
+package com.rbaun.banking.controller.v1.account.response;
 
 import com.rbaun.banking.model.account.Account;
 

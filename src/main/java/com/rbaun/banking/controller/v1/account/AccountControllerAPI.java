@@ -1,14 +1,14 @@
-package com.rbaun.banking.controller.account;
+package com.rbaun.banking.controller.v1.account;
 
-import com.rbaun.banking.controller.BaseControllerAPI;
-import com.rbaun.banking.controller.account.request.CreateAccountRequest;
-import com.rbaun.banking.controller.account.request.DepositRequest;
-import com.rbaun.banking.controller.account.request.TransferRequest;
-import com.rbaun.banking.controller.account.request.WithdrawRequest;
-import com.rbaun.banking.controller.account.response.AccountBalanceResponse;
-import com.rbaun.banking.controller.account.response.AccountResponse;
-import com.rbaun.banking.controller.account.response.DeleteAccountResponse;
-import com.rbaun.banking.controller.account.response.TransactionResponse;
+import com.rbaun.banking.controller.v1.BaseControllerAPI;
+import com.rbaun.banking.controller.v1.account.request.CreateAccountRequest;
+import com.rbaun.banking.controller.v1.account.request.DepositRequest;
+import com.rbaun.banking.controller.v1.account.request.TransferRequest;
+import com.rbaun.banking.controller.v1.account.request.WithdrawRequest;
+import com.rbaun.banking.controller.v1.account.response.AccountBalanceResponse;
+import com.rbaun.banking.controller.v1.account.response.AccountResponse;
+import com.rbaun.banking.controller.v1.account.response.DeleteAccountResponse;
+import com.rbaun.banking.controller.v1.account.response.TransactionResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -33,21 +33,21 @@ public interface AccountControllerAPI extends BaseControllerAPI {
     String GET_ACCOUNT_BY_ID_URL = "/{id}";
     String CREATE_ACCOUNT_URL = "/create";
     String DELETE_ACCOUNT_URL = "/delete/{accountNumber}";
+    String DEPOSIT_URL = BASE_ACCOUNT_URL + "/deposit";
+    String WITHDRAW_URL = BASE_ACCOUNT_URL + "/withdraw";
+    String TRANSFER_URL = BASE_ACCOUNT_URL + "/transfer";
 
     /**
      * Account number operations
      */
     String BASE_ACCOUNT_NUMBER_URL = "/accountNumber";
     String GET_ACCOUNT_BY_ACCOUNT_NUMBER_URL = BASE_ACCOUNT_NUMBER_URL + "/{accountNumber}";
-    String DEPOSIT_URL = BASE_ACCOUNT_NUMBER_URL + "/deposit";
-    String WITHDRAW_URL = BASE_ACCOUNT_NUMBER_URL + "/withdraw";
-    String TRANSFER_URL = BASE_ACCOUNT_NUMBER_URL + "/transfer";
 
     /**
      * Transaction operations
      */
     String BASE_TRANSACTION_API = "/{accountNumber}/transactions";
-    String GET_ALL_TRANSACTIONS_URL = BASE_TRANSACTION_API + "";
+    String GET_ALL_TRANSACTIONS_URL = BASE_TRANSACTION_API;
 
     /**
      * Request a list of all the accounts
@@ -197,7 +197,7 @@ public interface AccountControllerAPI extends BaseControllerAPI {
                     )
             }
     )
-    @PutMapping(DEPOSIT_URL)
+    @PostMapping(DEPOSIT_URL)
     ResponseEntity<AccountBalanceResponse> deposit(@RequestBody DepositRequest request);
 
     /**
@@ -225,7 +225,7 @@ public interface AccountControllerAPI extends BaseControllerAPI {
                     )
             }
     )
-    @PutMapping(WITHDRAW_URL)
+    @PostMapping(WITHDRAW_URL)
     ResponseEntity<AccountBalanceResponse> withdraw(@RequestBody WithdrawRequest request);
 
     /**

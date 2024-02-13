@@ -1,4 +1,4 @@
-package com.rbaun.banking.controller.customer.request;
+package com.rbaun.banking.controller.v1.customer.request;
 
 import com.rbaun.banking.validation.ExactlyOneFieldNotNull;
 import io.swagger.v3.oas.annotations.Hidden;

@@ -1,4 +1,4 @@
-package com.rbaun.banking.controller;
+package com.rbaun.banking.controller.v1;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;

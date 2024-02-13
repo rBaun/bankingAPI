@@ -1,4 +1,4 @@
-package com.rbaun.banking.controller.account.request;
+package com.rbaun.banking.controller.v1.account.request;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

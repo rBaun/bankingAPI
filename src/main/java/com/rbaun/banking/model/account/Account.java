@@ -1,6 +1,6 @@
 package com.rbaun.banking.model.account;
 
-import com.rbaun.banking.controller.account.request.CreateAccountRequest;
+import com.rbaun.banking.controller.v1.account.request.CreateAccountRequest;
 import com.rbaun.banking.model.BaseEntity;
 import com.rbaun.banking.model.customer.Customer;
 import com.rbaun.banking.model.enums.AccountType;

@@ -1,7 +1,7 @@
 package com.rbaun.banking.model.customer;
 
-import com.rbaun.banking.controller.customer.request.CreateCustomerRequest;
-import com.rbaun.banking.controller.customer.request.UpdateCustomerRequest;
+import com.rbaun.banking.controller.v1.customer.request.CreateCustomerRequest;
+import com.rbaun.banking.controller.v1.customer.request.UpdateCustomerRequest;
 import com.rbaun.banking.model.BaseEntity;
 import com.rbaun.banking.model.account.Account;
 import jakarta.persistence.CascadeType;

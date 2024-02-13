@@ -1,4 +1,4 @@
-package com.rbaun.banking.controller.customer.response;
+package com.rbaun.banking.controller.v1.customer.response;
 
 import com.rbaun.banking.model.customer.Customer;
 import com.rbaun.banking.util.DateUtil;

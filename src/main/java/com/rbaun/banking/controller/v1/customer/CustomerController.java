@@ -1,11 +1,11 @@
-package com.rbaun.banking.controller.customer;
+package com.rbaun.banking.controller.v1.customer;
 
-import com.rbaun.banking.controller.BaseController;
-import com.rbaun.banking.controller.customer.request.CreateCustomerRequest;
-import com.rbaun.banking.controller.customer.request.LookupCustomerRequest;
-import com.rbaun.banking.controller.customer.request.UpdateCustomerRequest;
-import com.rbaun.banking.controller.customer.response.CustomerResponse;
-import com.rbaun.banking.controller.customer.response.DeleteCustomerResponse;
+import com.rbaun.banking.controller.v1.BaseController;
+import com.rbaun.banking.controller.v1.customer.request.CreateCustomerRequest;
+import com.rbaun.banking.controller.v1.customer.request.LookupCustomerRequest;
+import com.rbaun.banking.controller.v1.customer.request.UpdateCustomerRequest;
+import com.rbaun.banking.controller.v1.customer.response.CustomerResponse;
+import com.rbaun.banking.controller.v1.customer.response.DeleteCustomerResponse;
 import com.rbaun.banking.model.customer.Customer;
 import com.rbaun.banking.service.customer.CustomerService;
 import com.rbaun.banking.service.customer.strategy.LookupCustomerStrategyFactory;
