@@ -30,7 +30,7 @@ public interface AccountControllerAPI extends BaseControllerAPI {
      */
     String BASE_ACCOUNT_URL = ROOT_URL + "/accounts";
     String GET_ALL_ACCOUNTS_URL = "/all";
-    String GET_ACCOUNT_BY_ID_URL = "/{id}";
+    String GET_ACCOUNT_BY_ACCOUNT_NUMBER_URL = BASE_ACCOUNT_URL + "/{accountNumber}";
     String CREATE_ACCOUNT_URL = "/create";
     String DELETE_ACCOUNT_URL = "/delete/{accountNumber}";
     String DEPOSIT_URL = BASE_ACCOUNT_URL + "/deposit";
@@ -38,16 +38,12 @@ public interface AccountControllerAPI extends BaseControllerAPI {
     String TRANSFER_URL = BASE_ACCOUNT_URL + "/transfer";
 
     /**
-     * Account number operations
-     */
-    String BASE_ACCOUNT_NUMBER_URL = "/accountNumber";
-    String GET_ACCOUNT_BY_ACCOUNT_NUMBER_URL = BASE_ACCOUNT_NUMBER_URL + "/{accountNumber}";
-
-    /**
      * Transaction operations
      */
     String BASE_TRANSACTION_API = "/{accountNumber}/transactions";
     String GET_ALL_TRANSACTIONS_URL = BASE_TRANSACTION_API;
+
+
 
     /**
      * Request a list of all the accounts
@@ -73,12 +69,12 @@ public interface AccountControllerAPI extends BaseControllerAPI {
     ResponseEntity<List<AccountResponse>> getAllAccounts();
 
     /**
-     * Request to get an account by id
-     * @param id - the id of the account
+     * Request to get an account by account number
+     * @param accountNumber - the account number to find account by
      * @return @{@link ResponseEntity} with an @{@link AccountResponse}
      */
     @Operation(
-            summary = "Get an account by id",
+            summary = "Get an account by account number",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -93,8 +89,8 @@ public interface AccountControllerAPI extends BaseControllerAPI {
                     )
             }
     )
-    @GetMapping(GET_ACCOUNT_BY_ID_URL)
-    ResponseEntity<AccountResponse> getAccountById(@PathVariable Long id);
+    @GetMapping(GET_ACCOUNT_BY_ACCOUNT_NUMBER_URL)
+    ResponseEntity<AccountResponse> getAccountByAccountNumber(@PathVariable String accountNumber);
 
     /**
      * Request to create a new account
@@ -147,30 +143,6 @@ public interface AccountControllerAPI extends BaseControllerAPI {
     )
     @DeleteMapping(DELETE_ACCOUNT_URL)
     ResponseEntity<DeleteAccountResponse> deleteAccount(@PathVariable String accountNumber);
-
-    /**
-     * Request to get an account by account number
-     * @param accountNumber - the account number to find account by
-     * @return @{@link ResponseEntity} with an @{@link AccountResponse}
-     */
-    @Operation(
-            summary = "Get an account by account number",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Account found",
-                            content = @Content(
-                                    mediaType = "application/json"
-                            )
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Account not found"
-                    )
-            }
-    )
-    @GetMapping(GET_ACCOUNT_BY_ACCOUNT_NUMBER_URL)
-    ResponseEntity<AccountResponse> getAccountByAccountNumber(@PathVariable String accountNumber);
 
     /**
      * Request to deposit money into an account
