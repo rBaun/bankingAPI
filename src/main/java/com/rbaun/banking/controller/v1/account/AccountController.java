@@ -55,15 +55,6 @@ public class AccountController extends BaseController implements AccountControll
     }
 
     @Override
-    public ResponseEntity<AccountResponse> getAccountById(Long id) {
-        logger.info("{} requested to find account with id: {}", getLoggedInUsername(), id);
-        Account account = accountService.getAccountById(id);
-        logger.info("Found account: {}", account);
-
-        return ResponseEntity.ok(AccountResponse.from(account));
-    }
-
-    @Override
     public ResponseEntity<AccountResponse> getAccountByAccountNumber(String accountNumber) {
         logger.info("{} requested to find account with account number: {}", getLoggedInUsername(), accountNumber);
         Account account = accountService.getAccountByAccountNumber(accountNumber);
