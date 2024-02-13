@@ -26,5 +26,5 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     /**
      * Find an account on the customer by the account title
      */
-    Optional<Account> findByCustomer_IdAndTitle(Long customerId, String title);
+    Optional<Account> findByCustomer_EmailAndTitle(String email, String title);
 }
