@@ -2,7 +2,7 @@ name: Run Maven Tests
 
 on:
   push:
-    branches: [ dev, master ]
+    branches: [ dev ]
 
 jobs:
   build:
