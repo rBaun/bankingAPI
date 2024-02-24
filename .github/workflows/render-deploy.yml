@@ -15,3 +15,5 @@ jobs:
 
       - name: Trigger Render Deployment
         run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
+        env:
+          SPRING_PROFILES_ACTIVE: production
