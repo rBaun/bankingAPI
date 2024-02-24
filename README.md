@@ -4,9 +4,10 @@ This is a hobby project for developing the backend part of a banking application
 ## Getting started
 To get started, you need to visit the [Swagger UI](https://bankingapi-5ruj.onrender.com/api/swagger-ui/index.html) to test the endpoints.  
 You need a valid token to be able to use the endpoints. You can get a token by using the Auth API endpoints available from the Swagger UI. When using the Swagger UI, you need to add the token to the `Authorize` button in the top right corner.  
+Once you have a token, you can freely create a new customer, add accounts to the customer and start using the application.  
 Please note that this is deployed on a free version of render and **delays are expected during inactivity**.
 
-To get started locally, then make sure that the application-development.properties are updated with your local database settings.
+To get started locally, then make sure that the `application-development.properties` are updated with your local database settings.
 
 # Tech stack
 - Java / Spring Boot
@@ -15,7 +16,7 @@ To get started locally, then make sure that the application-development.properti
 - JUnit / Mockito
 - Swagger/OpenAPI
 - Docker
-- Github Actions
+- GitHub Actions
 - Render
 
 # Features
