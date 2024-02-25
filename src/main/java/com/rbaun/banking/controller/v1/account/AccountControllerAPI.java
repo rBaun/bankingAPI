@@ -30,12 +30,12 @@ public interface AccountControllerAPI extends BaseControllerAPI {
      */
     String BASE_ACCOUNT_URL = ROOT_URL + "/accounts";
     String GET_ALL_ACCOUNTS_URL = "/all";
-    String GET_ACCOUNT_BY_ACCOUNT_NUMBER_URL = BASE_ACCOUNT_URL + "/{accountNumber}";
+    String GET_ACCOUNT_BY_ACCOUNT_NUMBER_URL = "/{accountNumber}";
     String CREATE_ACCOUNT_URL = "/create";
     String DELETE_ACCOUNT_URL = "/delete/{accountNumber}";
-    String DEPOSIT_URL = BASE_ACCOUNT_URL + "/deposit";
-    String WITHDRAW_URL = BASE_ACCOUNT_URL + "/withdraw";
-    String TRANSFER_URL = BASE_ACCOUNT_URL + "/transfer";
+    String DEPOSIT_URL = "/deposit";
+    String WITHDRAW_URL = "/withdraw";
+    String TRANSFER_URL = "/transfer";
 
     /**
      * Transaction operations
