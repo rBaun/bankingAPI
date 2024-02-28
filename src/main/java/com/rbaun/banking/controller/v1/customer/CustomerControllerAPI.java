@@ -21,7 +21,7 @@ import java.util.List;
 public interface CustomerControllerAPI extends BaseControllerAPI {
 
     String BASE_URL = ROOT_URL + "/customers";
-    String GET_CUSTOMER_URL = BASE_URL;
+    String GET_CUSTOMER_URL = "/";
     String GET_ALL_CUSTOMERS_URL = "/all";
     String GET_CUSTOMERS_BY_SEARCH_TERM_URL = "/{searchTerm}";
     String CREATE_CUSTOMER_URL = "/create";
