@@ -25,6 +25,15 @@ public class CustomerController extends BaseController implements CustomerContro
     private CustomerService customerService;
 
     @Override
+    public ResponseEntity<CustomerResponse> getCustomer() {
+        logger.info("Finding Customer for {}", getLoggedInUsername());
+        CustomerResponse customer = CustomerResponse.from(getLoggedInCustomer());
+        logger.info("Finished looking for Customer: {}", customer);
+
+        return ResponseEntity.ok(customer);
+    }
+
+    @Override
     public ResponseEntity<List<CustomerResponse>> getAllCustomers() {
         logger.info("{} requested a list of all customers", getLoggedInUsername());
         List<CustomerResponse> customerList = customerService.findAllCustomers().stream().map(CustomerResponse::new).toList();
