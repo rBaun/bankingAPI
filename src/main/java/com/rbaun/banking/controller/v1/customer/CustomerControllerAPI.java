@@ -21,11 +21,33 @@ import java.util.List;
 public interface CustomerControllerAPI extends BaseControllerAPI {
 
     String BASE_URL = ROOT_URL + "/customers";
+    String GET_CUSTOMER_URL = BASE_URL;
     String GET_ALL_CUSTOMERS_URL = "/all";
     String GET_CUSTOMERS_BY_SEARCH_TERM_URL = "/{searchTerm}";
     String CREATE_CUSTOMER_URL = "/create";
     String DELETE_CUSTOMER_URL = "/delete";
     String UPDATE_CUSTOMER_URL = "/update/{id}";
+
+    /**
+     * Get a Customer based on the authenticated user
+     * @return Customer associated with the user
+     */
+    @Operation(
+            summary = "Get a customer based on the signed in User",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Customer associated with the user",
+                            content = @Content(mediaType = "application/json")
+                    ),
+                    @ApiResponse(
+                            responseCode = "204",
+                            description = "The user has not registered as Customer"
+                    )
+            }
+    )
+    @GetMapping(GET_CUSTOMER_URL)
+    ResponseEntity<CustomerResponse> getCustomer();
 
     /**
      * Request a list of all the customers
